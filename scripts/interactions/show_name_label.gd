@@ -6,7 +6,9 @@ extends Node
 # - RIGHT trigger: open it and share it with every peer via SharedInspection
 # The locally opened label closes when the pointer leaves the hotspot.
 
-var label_instance: Label3D
+var label_instance: Label3D  # Description; the title and "Shared by" parts are its children.
+var _title_label: Label3D
+var _shared_label: Label3D
 var _look_target: Node3D
 var _pinned_by_pid: bool = false
 var _pointer_over: bool = false
@@ -18,6 +20,9 @@ var _applied_scale: float = -1.0
 
 ## Label3D's default pixel_size — full-size text at model scale 1.
 const LABEL_PIXEL_SIZE := 0.005
+const LABEL_FONT_SIZE := 64
+const TITLE_COLOR := Color(0.35, 0.7, 1.0)
+const DESCRIPTION_COLOR := Color(1.0, 1.0, 1.0)
 
 @export var label_standoff: float = 0.35
 @export var label_lift: float = 0.2
@@ -68,7 +73,15 @@ func _model_scale() -> float:
 
 func _apply_label_scale() -> void:
 	_applied_scale = _model_scale()
-	label_instance.pixel_size = LABEL_PIXEL_SIZE * _applied_scale
+	var pixel_size := LABEL_PIXEL_SIZE * _applied_scale
+	label_instance.pixel_size = pixel_size
+	if _title_label:
+		_title_label.pixel_size = pixel_size
+	if _shared_label:
+		_shared_label.pixel_size = pixel_size
+		# Sit one title line above the title.
+		var line_px := ThemeDB.fallback_font.get_height(LABEL_FONT_SIZE)
+		_shared_label.position = Vector3.UP * line_px * pixel_size
 
 
 func pointer_event(event: XRToolsPointerEvent) -> void:
@@ -188,16 +201,14 @@ func _share_with_peers() -> void:
 		sharing.share_hotspot(String(get_parent().name))
 
 
-func _build_label_text() -> String:
+## Description lines under the title (the title itself is the metadata id).
+func _build_description_text() -> String:
 	var parent_node = get_parent()
 	var id: String = parent_node.metadata_id
 	var meta := MetadataManager.get_metadata(id)
 	var part_val: String = str(parent_node.part_name).replace("?", "").strip_edges() if parent_node.get("part_name") else ""
 
 	var lines: Array[String] = []
-	if _pinned_by_pid and _shared_by != "":
-		lines.append("Shared by %s" % _shared_by)
-	lines.append(id)
 	if part_val != "" and part_val != id:
 		lines.append(part_val)
 
@@ -225,21 +236,34 @@ func _show_label() -> void:
 	if label_instance:
 		return
 
-	label_instance = Label3D.new()
-	label_instance.text = _build_label_text()
-	label_instance.font_size = 64
-	label_instance.outline_size = 8
-	label_instance.modulate = _label_color
-	label_instance.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	label_instance.no_depth_test = true
-	label_instance.render_priority = 20
+	# Label3D is one color, so the label is three stacked parts: the description (root, hangs
+	# below the anchor), the title just above it, and "Shared by" above the title.
+	label_instance = _new_label_part(_build_description_text(), DESCRIPTION_COLOR, VERTICAL_ALIGNMENT_TOP)
 	label_instance.top_level = true
+	_title_label = _new_label_part(String(get_parent().metadata_id), TITLE_COLOR, VERTICAL_ALIGNMENT_BOTTOM)
+	label_instance.add_child(_title_label)
+	if _pinned_by_pid and _shared_by != "":
+		_shared_label = _new_label_part("Shared by %s" % _shared_by, _label_color, VERTICAL_ALIGNMENT_BOTTOM)
+		label_instance.add_child(_shared_label)
 
 	var host := _label_host()
 	host.add_child(label_instance)
 	_apply_label_scale()
 	_update_label_position()
 	set_process(true)
+
+
+func _new_label_part(text: String, color: Color, v_align: VerticalAlignment) -> Label3D:
+	var part := Label3D.new()
+	part.text = text
+	part.font_size = LABEL_FONT_SIZE
+	part.outline_size = 8
+	part.modulate = color
+	part.vertical_alignment = v_align
+	part.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	part.no_depth_test = true
+	part.render_priority = 20
+	return part
 
 
 func _update_label_position() -> void:
@@ -278,5 +302,7 @@ func _free_label() -> void:
 	if label_instance and label_instance.is_inside_tree():
 		label_instance.queue_free()
 	label_instance = null
+	_title_label = null
+	_shared_label = null
 	_applied_scale = -1.0
 	set_process(false)
