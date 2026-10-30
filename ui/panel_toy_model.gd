@@ -18,13 +18,22 @@ extends Control
 @onready var lock_button: Button = $Panel/VBoxContainer/ScaleLockContainer/LockButton
 @onready var qr_status: Label = $Panel/VBoxContainer/QRContainer/QRStatus
 @onready var qr_lock_button: Button = $Panel/VBoxContainer/QRContainer/QRLockButton
+@onready var panel: Panel = $Panel
+@onready var maximize_button: Button = $MaximizeButton
 
 const QR_POLL_INTERVAL := 0.25
+## Size of the minimized tab, in viewport pixels.
+const MINIMIZED_VIEWPORT_SIZE := Vector2(130, 36)
 
 ## True while syncing slider from external events — avoids feedback loop to MenuControl.
 var _updating_slider: bool = false
 var _scale_locked: bool = false
 var _qr_poll_timer: float = 0.0
+var _minimized: bool = false
+## Full-size Viewport2Din3D settings, captured on first minimize so they can be restored.
+var _full_viewport_size: Vector2
+var _full_screen_size: Vector2
+var _full_position: Vector3
 
 
 func _ready() -> void:
@@ -40,6 +49,43 @@ func _process(delta: float) -> void:
 	if _qr_poll_timer >= QR_POLL_INTERVAL:
 		_qr_poll_timer = 0.0
 		_refresh_qr_status()
+
+
+func _on_minimize_button_pressed() -> void:
+	_set_minimized.call_deferred(true)
+
+
+func _on_maximize_button_pressed() -> void:
+	_set_minimized.call_deferred(false)
+
+
+## Swaps the full panel for a small tab and shrinks the 3D screen to match, so the
+## hidden area no longer blocks the pointer. The top edge stays put.
+func _set_minimized(minimized: bool) -> void:
+	if minimized == _minimized:
+		return
+	_minimized = minimized
+	panel.visible = not minimized
+	maximize_button.visible = minimized
+
+	# The panel lives in a SubViewport whose parent is the Viewport2Din3D node.
+	var host := get_viewport().get_parent() as Node3D
+	if not host or not "screen_size" in host or not "viewport_size" in host:
+		return
+	if minimized:
+		_full_viewport_size = host.viewport_size
+		_full_screen_size = host.screen_size
+		_full_position = host.position
+		# Keep the same pixel density as the full panel.
+		var pixels_to_meters: Vector2 = _full_screen_size / _full_viewport_size
+		var small_screen: Vector2 = MINIMIZED_VIEWPORT_SIZE * pixels_to_meters
+		host.viewport_size = MINIMIZED_VIEWPORT_SIZE
+		host.screen_size = small_screen
+		host.position = _full_position + Vector3(0.0, (_full_screen_size.y - small_screen.y) * 0.5, 0.0)
+	else:
+		host.viewport_size = _full_viewport_size
+		host.screen_size = _full_screen_size
+		host.position = _full_position
 
 
 func _on_qr_lock_button_toggled(toggled_on: bool) -> void:

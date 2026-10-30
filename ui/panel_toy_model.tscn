@@ -82,11 +82,23 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 8
 
-[node name="Title" type="Label" parent="Panel/VBoxContainer"]
+[node name="TitleContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/VBoxContainer/TitleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 14
 text = "Model Scale Controls"
 horizontal_alignment = 1
+
+[node name="MinimizeButton" type="Button" parent="Panel/VBoxContainer/TitleContainer"]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+text = "_"
 
 [node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
 layout_mode = 2
@@ -183,6 +195,22 @@ L stick: slide  |  R stick: turn / size"
 horizontal_alignment = 1
 autowrap_mode = 3
 
+[node name="MaximizeButton" type="Button" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+text = "Model Controls +"
+
+[connection signal="pressed" from="Panel/VBoxContainer/TitleContainer/MinimizeButton" to="." method="_on_minimize_button_pressed"]
+[connection signal="pressed" from="MaximizeButton" to="." method="_on_maximize_button_pressed"]
 [connection signal="toggled" from="Panel/VBoxContainer/ScaleLockContainer/LockButton" to="." method="_on_lock_button_toggled"]
 [connection signal="toggled" from="Panel/VBoxContainer/QRContainer/QRLockButton" to="." method="_on_qr_lock_button_toggled"]
 [connection signal="value_changed" from="Panel/VBoxContainer/ScaleSlider" to="." method="_on_scale_slider_value_changed"]

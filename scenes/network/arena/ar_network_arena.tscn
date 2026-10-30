@@ -99,7 +99,7 @@ throttle_fps = 20.0
 unshaded = true
 
 [node name="Viewport2Din3D_ToyModel" parent="XROrigin3D/XRCamera3D" index="1" unique_id=1881996105 instance=ExtResource("16_viewport_2d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.842171e-14, -0.4515636, -0.6999998)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2822048, 0.11094499, -0.6999998)
 visible = false
 screen_size = Vector2(0.305, 0.338)
 scene = ExtResource("23_toy_model_panel")
