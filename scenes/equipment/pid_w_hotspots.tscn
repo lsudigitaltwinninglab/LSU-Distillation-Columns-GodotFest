@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://cp5vy1fncqkkd"]
+
+[ext_resource type="Script" path="res://scripts/interactions/pid_pickable.gd" id="1_pid"]
+[ext_resource type="PackedScene" uid="uid://dn7fuw3exbbho" path="res://data/technical_drawings/distillery_pid_with_hotspots.tscn" id="2_dvawr"]
+[ext_resource type="Script" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand.gd" id="3_grab"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tgrve"]
+size = Vector3(1.85, 1.32, 0.06)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_frame"]
+shading_mode = 0
+albedo_color = Color(0.18, 0.2, 0.24, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_frame"]
+material = SubResource("StandardMaterial3D_frame")
+size = Vector3(1.9, 1.37, 0.02)
+
+[node name="PickableObject" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 0
+freeze_mode = 1
+gravity_scale = 0.0
+release_mode = 1
+ranged_grab_method = 2
+second_hand_grab = 2
+press_to_hold = true
+script = ExtResource("1_pid")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_tgrve")
+
+[node name="Frame" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_frame")
+
+[node name="GrabPointBottom" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.64, 0.02)
+script = ExtResource("3_grab")
+
+[node name="GrabPointLeft" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.89, 0, 0.02)
+script = ExtResource("3_grab")
+mode = 2
+
+[node name="GrabPointRight" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.89, 0, 0.02)
+script = ExtResource("3_grab")
+mode = 1
+
+[node name="PIDwithHotspots" parent="." instance=ExtResource("2_dvawr")]
+transform = Transform3D(1.15, 0, 0, 0, -5.02868e-08, -1.15, 0, 1.15, -5.02868e-08, 0, 0, 0.015)

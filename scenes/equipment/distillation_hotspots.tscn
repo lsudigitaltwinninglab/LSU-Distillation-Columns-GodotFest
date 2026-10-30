@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://drlg85qifk8v5"]
+
+[ext_resource type="Script" path="res://scripts/interactions/distillation_hotspot_builder.gd" id="1_builder"]
+[ext_resource type="Script" path="res://scripts/interactions/HotspotHighlighter.gd" id="2_hl"]
+[ext_resource type="Material" uid="uid://r221wsnnb1n2" path="res://assets/materials/ParticleSystem.tres" id="3_particles"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_beam"]
+direction = Vector3(0, 0, -1)
+spread = 0.0
+initial_velocity_min = 3.0
+initial_velocity_max = 3.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="SphereMesh" id="SphereMesh_beam"]
+material = ExtResource("3_particles")
+radius = 0.02
+height = 0.04
+radial_segments = 12
+rings = 8
+
+[node name="DistillationHotspots" type="Node3D"]
+script = ExtResource("2_hl")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 10
+lifetime = 5.0
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_beam")
+draw_pass_1 = SubResource("SphereMesh_beam")
+
+[node name="HotspotVolumes" type="Node3D" parent="."]
+script = ExtResource("1_builder")
+show_debug_meshes = false
+editor_always_show_debug = false
+snap_to_model_nodes = true
+collision_radius = 0.28
+large_equipment_radius = 0.65

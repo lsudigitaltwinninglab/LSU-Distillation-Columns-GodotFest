@@ -1,0 +1,1260 @@
+[gd_scene format=3 uid="uid://cip328fy377cq"]
+
+[ext_resource type="PackedScene" uid="uid://cx224mqd711s7" path="res://assets/models/LSUDistillationLab.glb" id="1_yuiur"]
+[ext_resource type="Script" uid="uid://f305shyb1q2l" path="res://scripts/plant/distillery_lab_collision.gd" id="2_collision"]
+
+[sub_resource type="StandardMaterial3D" id="LookFrame"]
+resource_name = "Look Frame Steel"
+albedo_color = Color(0.3, 0.31, 0.37, 1)
+metallic = 0.2
+roughness = 0.45
+
+[sub_resource type="StandardMaterial3D" id="LookBlack"]
+resource_name = "Look Black"
+albedo_color = Color(0.04, 0.04, 0.05, 1)
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="LookSteelBright"]
+resource_name = "Look Steel Bright"
+albedo_color = Color(0.42, 0.43, 0.48, 1)
+metallic = 0.25
+roughness = 0.35
+
+[sub_resource type="StandardMaterial3D" id="LookDarkRed"]
+resource_name = "Look Dark Red"
+albedo_color = Color(0.24, 0.03, 0.04, 1)
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="LookSteelMatte"]
+resource_name = "Look Steel Matte"
+albedo_color = Color(0.34, 0.35, 0.4, 1)
+metallic = 0.2
+roughness = 0.45
+
+[sub_resource type="StandardMaterial3D" id="LookBlueSteel"]
+resource_name = "Look Blue Steel"
+albedo_color = Color(0.22, 0.25, 0.4, 1)
+metallic = 0.3
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="LookYellow"]
+resource_name = "Look Yellow"
+albedo_color = Color(0.65, 0.53, 0, 1)
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="LookWhite"]
+resource_name = "Look Panel White"
+albedo_color = Color(0.5, 0.51, 0.55, 1)
+roughness = 0.55
+
+[sub_resource type="StandardMaterial3D" id="LookRedPipe"]
+resource_name = "Look Red Pipe"
+albedo_color = Color(0.42, 0.07, 0.05, 1)
+metallic = 0.15
+roughness = 0.45
+
+[sub_resource type="StandardMaterial3D" id="LookNavy"]
+resource_name = "Look Navy"
+albedo_color = Color(0.02, 0.07, 0.3, 1)
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="LookGreen"]
+resource_name = "Look Green"
+albedo_color = Color(0.1, 0.42, 0.05, 1)
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="LookGlass"]
+resource_name = "Look Glass"
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0.75, 0.85, 0.95, 0.28)
+roughness = 0.1
+
+[sub_resource type="StandardMaterial3D" id="LookBlackMetal"]
+resource_name = "Look Black Metal"
+albedo_color = Color(0.1, 0.1, 0.12, 1)
+metallic = 0.3
+roughness = 0.4
+
+[sub_resource type="StandardMaterial3D" id="LookOrange"]
+resource_name = "Look Orange"
+albedo_color = Color(0.65, 0.3, 0.07, 1)
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="LookTeal"]
+resource_name = "Look Teal"
+albedo_color = Color(0.15, 0.42, 0.33, 1)
+roughness = 0.25
+
+[sub_resource type="StandardMaterial3D" id="LookGrate"]
+resource_name = "Look Grate"
+albedo_color = Color(0.28, 0.29, 0.33, 1)
+metallic = 0.3
+roughness = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2tsfk"]
+size = Vector3(2.8399053, 1.6742737, 1.3039868)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bas1m"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.95, 0.25, 0.15, 0.38)
+
+[sub_resource type="BoxMesh" id="BoxMesh_eat6y"]
+size = Vector3(1.0164661, 0.118261725, 3.6357129)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mnt2l"]
+size = Vector3(1, 0.01928711, 3.6646423)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vdrtp"]
+size = Vector3(0.12893677, 1.059082, 3.6351929)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1x1jf"]
+size = Vector3(1, 1, 0.18408203)
+
+[node name="LSUDistillationLab" unique_id=1918447823 instance=ExtResource("1_yuiur")]
+script = ExtResource("2_collision")
+show_debug_colliders = false
+
+[node name="MetalFrame" parent="Scene Collection" parent_id_path=PackedInt32Array(602853175) index="0" unique_id=504650587]
+surface_material_override/0 = SubResource("LookFrame")
+
+[node name="Cylinder_023" parent="Scene Collection/MetalFrame" index="0" unique_id=134646567]
+surface_material_override/0 = SubResource("LookFrame")
+
+[node name="Ladder_001" parent="Scene Collection/MetalFrame" index="1" unique_id=400082311]
+surface_material_override/0 = SubResource("LookFrame")
+
+[node name="GN Instance" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="0" unique_id=706855503]
+surface_material_override/0 = SubResource("LookBlack")
+
+[node name="GN Instance2" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="1" unique_id=1585798167]
+surface_material_override/0 = SubResource("LookBlack")
+
+[node name="GN Instance3" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="2" unique_id=2126746469]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance4" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="3" unique_id=1671489334]
+surface_material_override/0 = SubResource("LookBlack")
+
+[node name="GN Instance5" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="4" unique_id=1923843354]
+surface_material_override/0 = SubResource("LookDarkRed")
+
+[node name="GN Instance6" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="5" unique_id=1807703480]
+surface_material_override/0 = SubResource("LookDarkRed")
+
+[node name="GN Instance7" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="6" unique_id=140281708]
+surface_material_override/0 = SubResource("LookDarkRed")
+
+[node name="GN Instance8" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="7" unique_id=888618854]
+surface_material_override/0 = SubResource("LookDarkRed")
+
+[node name="GN Instance9" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="8" unique_id=1174578681]
+surface_material_override/0 = SubResource("LookBlack")
+
+[node name="GN Instance10" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="9" unique_id=574177104]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance11" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="10" unique_id=2037120554]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance12" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="11" unique_id=1494683399]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance13" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="12" unique_id=1091421543]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance14" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="13" unique_id=724155770]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance15" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="14" unique_id=1749621918]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="GN Instance16" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="15" unique_id=1706092974]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="GN Instance17" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="16" unique_id=355275253]
+surface_material_override/0 = SubResource("LookBlueSteel")
+surface_material_override/1 = SubResource("LookSteelMatte")
+
+[node name="GN Instance18" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="17" unique_id=219250449]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance19" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="18" unique_id=1273867460]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookBlack")
+surface_material_override/2 = SubResource("LookYellow")
+
+[node name="GN Instance20" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="19" unique_id=1703097761]
+surface_material_override/0 = SubResource("LookBlueSteel")
+surface_material_override/1 = SubResource("LookSteelMatte")
+
+[node name="GN Instance21" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="20" unique_id=436857875]
+surface_material_override/0 = SubResource("LookDarkRed")
+
+[node name="GN Instance22" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="21" unique_id=1042942039]
+surface_material_override/0 = SubResource("LookWhite")
+
+[node name="GN Instance23" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="22" unique_id=1383785775]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance24" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="23" unique_id=27779052]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance25" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="24" unique_id=2122009713]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance26" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="25" unique_id=784184436]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance27" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="26" unique_id=1627797306]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance28" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="27" unique_id=1840920669]
+surface_material_override/0 = SubResource("LookWhite")
+
+[node name="GN Instance29" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="28" unique_id=415386776]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance30" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="29" unique_id=811535263]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance31" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="30" unique_id=167504100]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance32" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="31" unique_id=1800421704]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance33" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="32" unique_id=1142144291]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance34" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="33" unique_id=1685261701]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance35" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="34" unique_id=546402618]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance36" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="35" unique_id=1591465311]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance37" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="36" unique_id=170515792]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance38" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="37" unique_id=1809845572]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance39" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="38" unique_id=277476017]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance40" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="39" unique_id=1278364273]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance41" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="40" unique_id=2022371621]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance42" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="41" unique_id=1759575659]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance43" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="42" unique_id=1104556359]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance44" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="43" unique_id=1325349122]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance45" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="44" unique_id=1025115736]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance46" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="45" unique_id=745724008]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance47" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="46" unique_id=1474608531]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance48" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="47" unique_id=770840503]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance49" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="48" unique_id=345770195]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance50" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="49" unique_id=705043212]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance52" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="51" unique_id=920027284]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="GN Instance53" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="52" unique_id=795739417]
+surface_material_override/0 = SubResource("LookBlack")
+surface_material_override/1 = SubResource("LookSteelBright")
+
+[node name="GN Instance54" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="53" unique_id=621358696]
+surface_material_override/0 = SubResource("LookRedPipe")
+surface_material_override/1 = SubResource("LookYellow")
+surface_material_override/2 = SubResource("LookSteelBright")
+surface_material_override/3 = SubResource("LookBlack")
+
+[node name="GN Instance55" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="54" unique_id=1540496930]
+surface_material_override/0 = SubResource("LookBlack")
+surface_material_override/1 = SubResource("LookYellow")
+surface_material_override/2 = SubResource("LookRedPipe")
+surface_material_override/3 = SubResource("LookWhite")
+
+[node name="GN Instance56" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="55" unique_id=2142082416]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookNavy")
+surface_material_override/2 = SubResource("LookBlack")
+surface_material_override/3 = SubResource("LookWhite")
+
+[node name="GN Instance57" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="56" unique_id=312137774]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookGreen")
+surface_material_override/2 = SubResource("LookBlack")
+surface_material_override/3 = SubResource("LookWhite")
+
+[node name="GN Instance58" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="57" unique_id=1951767950]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="GN Instance60" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="59" unique_id=868264921]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance62" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="61" unique_id=808703022]
+surface_material_override/0 = SubResource("LookWhite")
+
+[node name="GN Instance64" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="63" unique_id=882755174]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="GN Instance65" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="64" unique_id=1883126435]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance66" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="65" unique_id=2080467919]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance67" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="66" unique_id=991744810]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="GN Instance68" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="67" unique_id=1602885144]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance69" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="68" unique_id=1421136201]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="GN Instance70" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="69" unique_id=396996023]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="GN Instance71" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="70" unique_id=1518177929]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="GN Instance72" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="71" unique_id=1982802658]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="GN Instance73" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="72" unique_id=359579970]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="GN Instance74" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="73" unique_id=870763831]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="GN Instance76" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="75" unique_id=186599885]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance77" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="76" unique_id=771702027]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookRedPipe")
+surface_material_override/2 = SubResource("LookSteelBright")
+surface_material_override/3 = SubResource("LookGlass")
+
+[node name="GN Instance78" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="77" unique_id=1243527087]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance79" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="78" unique_id=339307633]
+surface_material_override/0 = SubResource("LookRedPipe")
+
+[node name="GN Instance81" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="80" unique_id=588321303]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance83" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="82" unique_id=911956312]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance85" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="84" unique_id=790214727]
+surface_material_override/0 = SubResource("LookGlass")
+
+[node name="GN Instance87" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="86" unique_id=550397042]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance89" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="88" unique_id=788160779]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance90" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="89" unique_id=609178960]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="GN Instance91" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="90" unique_id=1650148672]
+surface_material_override/0 = SubResource("LookBlack")
+surface_material_override/1 = SubResource("LookWhite")
+surface_material_override/2 = SubResource("LookSteelBright")
+
+[node name="GN Instance92" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="91" unique_id=1855891366]
+surface_material_override/0 = SubResource("LookBlack")
+surface_material_override/1 = SubResource("LookWhite")
+surface_material_override/2 = SubResource("LookSteelBright")
+
+[node name="GN Instance93" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="92" unique_id=2023219735]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance94" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="93" unique_id=182588728]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance95" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="94" unique_id=392039486]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance96" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="95" unique_id=271318060]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance97" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="96" unique_id=1239677563]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance98" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="97" unique_id=854364096]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance99" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="98" unique_id=1722732796]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance100" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="99" unique_id=2041796706]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance101" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="100" unique_id=1278120893]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance102" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="101" unique_id=1999142017]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance103" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="102" unique_id=157915766]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance104" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="103" unique_id=1271089766]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookBlueSteel")
+
+[node name="GN Instance105" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="104" unique_id=1585732353]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookBlueSteel")
+
+[node name="GN Instance106" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="105" unique_id=982556926]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance107" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="106" unique_id=250556104]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance108" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="107" unique_id=10995644]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance109" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="108" unique_id=1358398696]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance110" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="109" unique_id=463969880]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance111" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="110" unique_id=617713513]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance112" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="111" unique_id=565453592]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance113" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="112" unique_id=1079106689]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance114" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="113" unique_id=72275193]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance115" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="114" unique_id=2126070772]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance116" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="115" unique_id=1348055373]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance117" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="116" unique_id=217390766]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance118" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="117" unique_id=621049407]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance119" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="118" unique_id=1277421605]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance120" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="119" unique_id=712377549]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance121" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="120" unique_id=92438175]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance122" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="121" unique_id=1283980369]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance123" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="122" unique_id=722090287]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance124" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="123" unique_id=1955144610]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance125" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="124" unique_id=911043749]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance126" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="125" unique_id=560286884]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GN Instance127" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="126" unique_id=205685312]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance128" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="127" unique_id=404232150]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance129" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="128" unique_id=37545074]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance130" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="129" unique_id=2142908030]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance131" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="130" unique_id=1419881859]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance132" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="131" unique_id=953538003]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance133" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="132" unique_id=475315812]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance134" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="133" unique_id=1309711861]
+surface_material_override/0 = SubResource("LookBlackMetal")
+surface_material_override/1 = SubResource("LookBlueSteel")
+surface_material_override/2 = SubResource("LookSteelBright")
+surface_material_override/3 = SubResource("LookOrange")
+
+[node name="GN Instance135" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="134" unique_id=483063635]
+surface_material_override/0 = SubResource("LookBlackMetal")
+surface_material_override/1 = SubResource("LookBlueSteel")
+surface_material_override/2 = SubResource("LookSteelBright")
+surface_material_override/3 = SubResource("LookOrange")
+
+[node name="GN Instance136" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="135" unique_id=1555723193]
+surface_material_override/0 = SubResource("LookBlackMetal")
+surface_material_override/1 = SubResource("LookBlueSteel")
+surface_material_override/2 = SubResource("LookSteelBright")
+surface_material_override/3 = SubResource("LookOrange")
+
+[node name="GN Instance137" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="136" unique_id=17902509]
+surface_material_override/0 = SubResource("LookTeal")
+surface_material_override/1 = SubResource("LookBlack")
+surface_material_override/2 = SubResource("LookSteelMatte")
+surface_material_override/3 = SubResource("LookGrate")
+
+[node name="GN Instance138" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="137" unique_id=2061251510]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance139" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="138" unique_id=819378415]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance140" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="139" unique_id=662456155]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance141" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="140" unique_id=1202974606]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance142" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="141" unique_id=930026578]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="GN Instance143" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="142" unique_id=1438022984]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance144" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="143" unique_id=584374318]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance145" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="144" unique_id=1753663675]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance146" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="145" unique_id=997044407]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="GN Instance147" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="146" unique_id=1400993375]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="GN Instance148" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="147" unique_id=663597054]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="GN Instance149" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="148" unique_id=1516123090]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="GN Instance150" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="149" unique_id=590790461]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="GN Instance151" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="150" unique_id=1047773280]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="GN Instance152" parent="Scene Collection/Mirror" parent_id_path=PackedInt32Array(487951264) index="151" unique_id=1159530541]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="Bolt_004" parent="Scene Collection/Model/Bolts" parent_id_path=PackedInt32Array(709052330) index="0" unique_id=438398429]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="Bolt_005" parent="Scene Collection/Model/Bolts" parent_id_path=PackedInt32Array(709052330) index="1" unique_id=697523550]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Bolt_006" parent="Scene Collection/Model/Bolts" parent_id_path=PackedInt32Array(709052330) index="2" unique_id=1168703927]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Bolt_017" parent="Scene Collection/Model/Bolts" parent_id_path=PackedInt32Array(709052330) index="3" unique_id=867798538]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Bolt_020" parent="Scene Collection/Model/Bolts" parent_id_path=PackedInt32Array(709052330) index="4" unique_id=143948956]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Bolt_021" parent="Scene Collection/Model/Bolts" parent_id_path=PackedInt32Array(709052330) index="5" unique_id=1935514848]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Bolt_022" parent="Scene Collection/Model/Bolts" parent_id_path=PackedInt32Array(709052330) index="6" unique_id=1597641471]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="GN Instance153" parent="Scene Collection/Model/Electric/Body" parent_id_path=PackedInt32Array(1745413005) index="0" unique_id=1595675621]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="Emergency Stop" parent="Scene Collection/Model/Electric" parent_id_path=PackedInt32Array(444009546) index="1" unique_id=758981824]
+surface_material_override/0 = SubResource("LookRedPipe")
+surface_material_override/1 = SubResource("LookYellow")
+surface_material_override/2 = SubResource("LookSteelBright")
+surface_material_override/3 = SubResource("LookBlack")
+
+[node name="Handle" parent="Scene Collection/Model/Electric" parent_id_path=PackedInt32Array(444009546) index="2" unique_id=2058453052]
+surface_material_override/0 = SubResource("LookBlack")
+surface_material_override/1 = SubResource("LookSteelBright")
+
+[node name="Main Switch" parent="Scene Collection/Model/Electric" parent_id_path=PackedInt32Array(444009546) index="3" unique_id=1444680107]
+surface_material_override/0 = SubResource("LookBlack")
+surface_material_override/1 = SubResource("LookYellow")
+surface_material_override/2 = SubResource("LookRedPipe")
+surface_material_override/3 = SubResource("LookWhite")
+
+[node name="Reactor?" parent="Scene Collection/Model/Electric" parent_id_path=PackedInt32Array(444009546) index="4" unique_id=71278702]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookNavy")
+surface_material_override/2 = SubResource("LookBlack")
+surface_material_override/3 = SubResource("LookWhite")
+
+[node name="Reactor?_001" parent="Scene Collection/Model/Electric" parent_id_path=PackedInt32Array(444009546) index="5" unique_id=1021267710]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookGreen")
+surface_material_override/2 = SubResource("LookBlack")
+surface_material_override/3 = SubResource("LookWhite")
+
+[node name="Flange" parent="Scene Collection/Model/Flanges" parent_id_path=PackedInt32Array(426146777) index="0" unique_id=1242778591]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="Flange_003" parent="Scene Collection/Model/Flanges" parent_id_path=PackedInt32Array(426146777) index="1" unique_id=864607151]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="Flange_004" parent="Scene Collection/Model/Flanges" parent_id_path=PackedInt32Array(426146777) index="2" unique_id=155598413]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="Flange_005" parent="Scene Collection/Model/Flanges" parent_id_path=PackedInt32Array(426146777) index="3" unique_id=1946489909]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="Flange_006" parent="Scene Collection/Model/Flanges" parent_id_path=PackedInt32Array(426146777) index="4" unique_id=1569003822]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="Flange_007" parent="Scene Collection/Model/Flanges" parent_id_path=PackedInt32Array(426146777) index="5" unique_id=1197976405]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="Flange_008" parent="Scene Collection/Model/Flanges" parent_id_path=PackedInt32Array(426146777) index="6" unique_id=140153334]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="Flange_009" parent="Scene Collection/Model/Flanges" parent_id_path=PackedInt32Array(426146777) index="7" unique_id=1022412778]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="Flange_010" parent="Scene Collection/Model/Flanges" parent_id_path=PackedInt32Array(426146777) index="8" unique_id=266437774]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="Flange_011" parent="Scene Collection/Model/Flanges" parent_id_path=PackedInt32Array(426146777) index="9" unique_id=1578372453]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="Flange_012" parent="Scene Collection/Model/Flanges" parent_id_path=PackedInt32Array(426146777) index="10" unique_id=756331429]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="Flange_013" parent="Scene Collection/Model/Flanges" parent_id_path=PackedInt32Array(426146777) index="11" unique_id=1857420143]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="FT101 - Feed Flow" parent="Scene Collection/Model/Instrumentation" parent_id_path=PackedInt32Array(1402777256) index="0" unique_id=509184433]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="FT102 - Bottom Product Flow" parent="Scene Collection/Model/Instrumentation" parent_id_path=PackedInt32Array(1402777256) index="1" unique_id=621801580]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="FT102 - Reflux Flow" parent="Scene Collection/Model/Instrumentation" parent_id_path=PackedInt32Array(1402777256) index="2" unique_id=292767080]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="FT104 - Distillate Flow" parent="Scene Collection/Model/Instrumentation" parent_id_path=PackedInt32Array(1402777256) index="3" unique_id=2039165808]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="FT105 - Supply Steam" parent="Scene Collection/Model/Instrumentation" parent_id_path=PackedInt32Array(1402777256) index="4" unique_id=1222239784]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="FT106 - CW Flow to E101" parent="Scene Collection/Model/Instrumentation" parent_id_path=PackedInt32Array(1402777256) index="5" unique_id=483476124]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="PT101" parent="Scene Collection/Model/Instrumentation" parent_id_path=PackedInt32Array(1402777256) index="6" unique_id=497057591]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="Cube" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="0" unique_id=520133086]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookBlack")
+surface_material_override/2 = SubResource("LookYellow")
+
+[node name="Pipe" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="1" unique_id=969780876]
+surface_material_override/0 = SubResource("LookBlack")
+
+[node name="Pipe_001" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="2" unique_id=837302529]
+surface_material_override/0 = SubResource("LookBlack")
+
+[node name="Pipe_002" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="3" unique_id=203855572]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Pipe_003" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="4" unique_id=1848382684]
+surface_material_override/0 = SubResource("LookBlack")
+
+[node name="Pipe_004" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="5" unique_id=1133077333]
+surface_material_override/0 = SubResource("LookDarkRed")
+
+[node name="Pipe_005" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="6" unique_id=1434127353]
+surface_material_override/0 = SubResource("LookDarkRed")
+
+[node name="Pipe_006" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="7" unique_id=1843261755]
+surface_material_override/0 = SubResource("LookDarkRed")
+
+[node name="Pipe_007" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="8" unique_id=1774511158]
+surface_material_override/0 = SubResource("LookDarkRed")
+
+[node name="Pipe_008" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="9" unique_id=2031265863]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="Pipe_009" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="10" unique_id=1908273105]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="Pipe_011" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="12" unique_id=99705502]
+surface_material_override/0 = SubResource("LookBlack")
+
+[node name="Pipe_012" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="13" unique_id=624830248]
+surface_material_override/0 = SubResource("LookBlueSteel")
+surface_material_override/1 = SubResource("LookSteelMatte")
+
+[node name="Pipe_013" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="14" unique_id=536183681]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Pipe_014" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="15" unique_id=1244261230]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Pipe_015" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="16" unique_id=1022685816]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Pipe_016" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="17" unique_id=520683155]
+surface_material_override/0 = SubResource("LookBlueSteel")
+surface_material_override/1 = SubResource("LookSteelMatte")
+
+[node name="Pipe_018" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="18" unique_id=1605487903]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Pipe_021" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="19" unique_id=2072645895]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Pipe_023" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="20" unique_id=1219835669]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="PipeLine - Condensate from Reboiler" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="21" unique_id=817738893]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="PipeLine - Cooling Water Return" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="22" unique_id=897992296]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="PipeLine - Cooling Water Supply" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="23" unique_id=1677037830]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="PipeLine - Cooling Water to E104" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="24" unique_id=504578312]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="PipeLine - Distillate Product" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="25" unique_id=1366779745]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="PipeLine - Distillate Product to Tank_002" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="26" unique_id=1256628057]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="PipeLine - Distillate Reflux" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="27" unique_id=1697679682]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="PipeLine - Feed from P101" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="28" unique_id=837148432]
+surface_material_override/0 = SubResource("LookWhite")
+
+[node name="PipeLine - Feed to P101" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="29" unique_id=125877184]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="PipeLine - Overhead Vapor" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="30" unique_id=532783575]
+surface_material_override/0 = SubResource("LookWhite")
+
+[node name="PipeLine - P105 Discharge_002" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="31" unique_id=209549049]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="PipeLine - P105 Discharge_003" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="32" unique_id=1893891361]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="PipeLine - P105 Suction" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="33" unique_id=1628760524]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="PipeLine - Reboiler Outlet Liquid" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="34" unique_id=254677954]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="PipeLine - Reboiler Outlet Liquid_001" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="35" unique_id=1640930843]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="PipeLine - Steam Supply" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="36" unique_id=1252539020]
+surface_material_override/0 = SubResource("LookDarkRed")
+
+[node name="PipeLine - Vacuum Inlet" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="37" unique_id=792271870]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="PipeLine - Vacuum Line" parent="Scene Collection/Model/Pipe2" parent_id_path=PackedInt32Array(1224012121) index="38" unique_id=2020550239]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Pressure gauge" parent="Scene Collection/Model/Pressure" parent_id_path=PackedInt32Array(727276108) index="0" unique_id=494961183]
+surface_material_override/0 = SubResource("LookBlack")
+surface_material_override/1 = SubResource("LookWhite")
+surface_material_override/2 = SubResource("LookSteelBright")
+
+[node name="Pressure gauge_001" parent="Scene Collection/Model/Pressure" parent_id_path=PackedInt32Array(727276108) index="1" unique_id=843080865]
+surface_material_override/0 = SubResource("LookBlack")
+surface_material_override/1 = SubResource("LookWhite")
+surface_material_override/2 = SubResource("LookSteelBright")
+
+[node name="Circle_010" parent="Scene Collection/Model/Pumps" parent_id_path=PackedInt32Array(646768397) index="0" unique_id=1243770138]
+surface_material_override/0 = SubResource("LookTeal")
+surface_material_override/1 = SubResource("LookBlack")
+surface_material_override/2 = SubResource("LookSteelMatte")
+surface_material_override/3 = SubResource("LookGrate")
+
+[node name="Cylinder" parent="Scene Collection/Model/Pumps" parent_id_path=PackedInt32Array(646768397) index="1" unique_id=1141557636]
+surface_material_override/0 = SubResource("LookBlackMetal")
+surface_material_override/1 = SubResource("LookBlueSteel")
+surface_material_override/2 = SubResource("LookSteelBright")
+surface_material_override/3 = SubResource("LookOrange")
+
+[node name="Cylinder_004" parent="Scene Collection/Model/Pumps" parent_id_path=PackedInt32Array(646768397) index="2" unique_id=1608304656]
+surface_material_override/0 = SubResource("LookBlackMetal")
+surface_material_override/1 = SubResource("LookBlueSteel")
+surface_material_override/2 = SubResource("LookSteelBright")
+surface_material_override/3 = SubResource("LookOrange")
+
+[node name="pump" parent="Scene Collection/Model/Pumps" parent_id_path=PackedInt32Array(646768397) index="3" unique_id=642928549]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Pump" parent="Scene Collection/Model/Pumps" parent_id_path=PackedInt32Array(646768397) index="4" unique_id=1149927127]
+surface_material_override/0 = SubResource("LookBlackMetal")
+surface_material_override/1 = SubResource("LookBlueSteel")
+surface_material_override/2 = SubResource("LookSteelBright")
+surface_material_override/3 = SubResource("LookOrange")
+
+[node name="Cylinder_015" parent="Scene Collection/Model/TankParts" parent_id_path=PackedInt32Array(556872129) index="0" unique_id=1480216337]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="Cylinder_016" parent="Scene Collection/Model/TankParts" parent_id_path=PackedInt32Array(556872129) index="1" unique_id=982456830]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Cylinder_017" parent="Scene Collection/Model/TankParts" parent_id_path=PackedInt32Array(556872129) index="2" unique_id=1964464454]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Cylinder_018" parent="Scene Collection/Model/TankParts" parent_id_path=PackedInt32Array(556872129) index="3" unique_id=360580878]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Cylinder_019" parent="Scene Collection/Model/TankParts" parent_id_path=PackedInt32Array(556872129) index="4" unique_id=1481308012]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="Cylinder_020" parent="Scene Collection/Model/TankParts" parent_id_path=PackedInt32Array(556872129) index="5" unique_id=185758084]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="pipe_011" parent="Scene Collection/Model/TankParts" parent_id_path=PackedInt32Array(556872129) index="6" unique_id=1994840662]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="pipe_012" parent="Scene Collection/Model/TankParts" parent_id_path=PackedInt32Array(556872129) index="7" unique_id=1763852281]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="pipe_015" parent="Scene Collection/Model/TankParts" parent_id_path=PackedInt32Array(556872129) index="8" unique_id=2040860748]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="pipe_018" parent="Scene Collection/Model/TankParts" parent_id_path=PackedInt32Array(556872129) index="9" unique_id=1900636124]
+surface_material_override/0 = SubResource("LookWhite")
+
+[node name="GN Instance154" parent="Scene Collection/Model/TankParts/pipe_018" index="0" unique_id=1031121326]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="pipe_019" parent="Scene Collection/Model/TankParts" parent_id_path=PackedInt32Array(556872129) index="10" unique_id=915300986]
+surface_material_override/0 = SubResource("LookWhite")
+
+[node name="GN Instance155" parent="Scene Collection/Model/TankParts/pipe_019" index="0" unique_id=211492693]
+surface_material_override/0 = SubResource("LookWhite")
+
+[node name="pipe_020" parent="Scene Collection/Model/TankParts" parent_id_path=PackedInt32Array(556872129) index="11" unique_id=220056070]
+surface_material_override/0 = SubResource("LookWhite")
+
+[node name="GN Instance156" parent="Scene Collection/Model/TankParts/pipe_020" index="0" unique_id=1044524836]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="pipe_021" parent="Scene Collection/Model/TankParts" parent_id_path=PackedInt32Array(556872129) index="12" unique_id=538544848]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="pipe_013" parent="Scene Collection/Model/TankParts/Hook" parent_id_path=PackedInt32Array(896015587) index="0" unique_id=1510866368]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookSteelBright")
+surface_material_override/2 = SubResource("LookWhite")
+
+[node name="pipe_016" parent="Scene Collection/Model/TankParts/Hook" parent_id_path=PackedInt32Array(896015587) index="1" unique_id=887392726]
+surface_material_override/0 = SubResource("LookWhite")
+
+[node name="GN Instance157" parent="Scene Collection/Model/TankParts/Hook/pipe_016" index="0" unique_id=1139209093]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="TankFP_001" parent="Scene Collection/Model/TankParts/TankFront" parent_id_path=PackedInt32Array(1887058366) index="0" unique_id=1892497616]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookRedPipe")
+surface_material_override/2 = SubResource("LookSteelBright")
+surface_material_override/3 = SubResource("LookGlass")
+
+[node name="Cylinder_002" parent="Scene Collection/Model/TankParts/TankFront/Front pipes" parent_id_path=PackedInt32Array(203011654) index="0" unique_id=439166323]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Cylinder_003" parent="Scene Collection/Model/TankParts/TankFront/Front pipes" parent_id_path=PackedInt32Array(203011654) index="1" unique_id=1201511317]
+surface_material_override/0 = SubResource("LookRedPipe")
+
+[node name="pipe_006" parent="Scene Collection/Model/TankParts/TankFront/Front pipes" parent_id_path=PackedInt32Array(203011654) index="2" unique_id=904846934]
+surface_material_override/0 = SubResource("LookWhite")
+
+[node name="GN Instance158" parent="Scene Collection/Model/TankParts/TankFront/Front pipes/pipe_006" index="0" unique_id=1696995025]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="pipe_007" parent="Scene Collection/Model/TankParts/TankFront/Front pipes" parent_id_path=PackedInt32Array(203011654) index="3" unique_id=1591306589]
+surface_material_override/0 = SubResource("LookWhite")
+
+[node name="GN Instance159" parent="Scene Collection/Model/TankParts/TankFront/Front pipes/pipe_007" index="0" unique_id=1241860952]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="pipe_008" parent="Scene Collection/Model/TankParts/TankFront/Front pipes" parent_id_path=PackedInt32Array(203011654) index="4" unique_id=832059519]
+surface_material_override/0 = SubResource("LookWhite")
+
+[node name="GN Instance160" parent="Scene Collection/Model/TankParts/TankFront/Front pipes/pipe_008" index="0" unique_id=1719996184]
+surface_material_override/0 = SubResource("LookGlass")
+
+[node name="pipe_009" parent="Scene Collection/Model/TankParts/TankFront/Front pipes" parent_id_path=PackedInt32Array(203011654) index="5" unique_id=466197980]
+surface_material_override/0 = SubResource("LookWhite")
+
+[node name="GN Instance161" parent="Scene Collection/Model/TankParts/TankFront/Front pipes/pipe_009" index="0" unique_id=205980263]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="pipe_010" parent="Scene Collection/Model/TankParts/TankFront/Front pipes" parent_id_path=PackedInt32Array(203011654) index="6" unique_id=719843232]
+surface_material_override/0 = SubResource("LookWhite")
+
+[node name="GN Instance162" parent="Scene Collection/Model/TankParts/TankFront/Front pipes/pipe_010" index="0" unique_id=1147200267]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Tank" parent="Scene Collection/Model/Tanks" parent_id_path=PackedInt32Array(325154050) index="0" unique_id=1697981387]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="Tank_001" parent="Scene Collection/Model/Tanks" parent_id_path=PackedInt32Array(325154050) index="1" unique_id=1131667378]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="Tank_002" parent="Scene Collection/Model/Tanks" parent_id_path=PackedInt32Array(325154050) index="2" unique_id=702074558]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="Tank_003" parent="Scene Collection/Model/Tanks" parent_id_path=PackedInt32Array(325154050) index="3" unique_id=608642277]
+surface_material_override/0 = SubResource("LookSteelBright")
+surface_material_override/1 = SubResource("LookBlack")
+
+[node name="TK101 - Feed Tank" parent="Scene Collection/Model/Tanks" parent_id_path=PackedInt32Array(325154050) index="4" unique_id=1179642526]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="TK102 - Distillate Tank" parent="Scene Collection/Model/Tanks" parent_id_path=PackedInt32Array(325154050) index="5" unique_id=12956568]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="TK103 - Bottoms Tank" parent="Scene Collection/Model/Tanks" parent_id_path=PackedInt32Array(325154050) index="6" unique_id=44364076]
+surface_material_override/0 = SubResource("LookSteelBright")
+
+[node name="Vacuum" parent="Scene Collection/Model/Vacuum2" parent_id_path=PackedInt32Array(1945826961) index="0" unique_id=2111182175]
+surface_material_override/0 = SubResource("LookSteelMatte")
+
+[node name="V101" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="0" unique_id=601272705]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V103" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="1" unique_id=1651351130]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V104" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="2" unique_id=558968249]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V118" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="3" unique_id=982075468]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V119" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="4" unique_id=1685742239]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V120" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="5" unique_id=916129924]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V121" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="6" unique_id=291607986]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V125" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="7" unique_id=662207551]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V126" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="8" unique_id=1317997869]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V127" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="9" unique_id=184832190]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V128" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="10" unique_id=853224299]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V129" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="11" unique_id=1405823511]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V149" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="12" unique_id=1855189813]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V150" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="13" unique_id=1882411554]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V151" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="14" unique_id=693483629]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V152" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="15" unique_id=366560650]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="V153" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="16" unique_id=1093195549]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="Valve Test" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="17" unique_id=1155182751]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="Valve_001" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="18" unique_id=1734524542]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="Valve_002" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="19" unique_id=381921754]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="Valve_003" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="20" unique_id=248491203]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="Valve_005" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="21" unique_id=762653047]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="Valve_006" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="22" unique_id=1638733914]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="Valve_007" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="23" unique_id=1595045340]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="Valve_008" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="24" unique_id=618505929]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="Valve_009" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="25" unique_id=620286451]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="Valve_011" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="26" unique_id=2072851967]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="Valve_012" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="27" unique_id=1200852052]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="Valve_013" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="28" unique_id=541583769]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="Valve_014" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="29" unique_id=1390739785]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="Valve_015" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="30" unique_id=1900461398]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="Valve_016" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="31" unique_id=1464778179]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookBlueSteel")
+
+[node name="Valve_017" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="32" unique_id=50481985]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookBlueSteel")
+
+[node name="Valve_031" parent="Scene Collection/Model/Valve" parent_id_path=PackedInt32Array(1692146972) index="33" unique_id=1850175222]
+surface_material_override/0 = SubResource("LookSteelMatte")
+surface_material_override/1 = SubResource("LookRedPipe")
+
+[node name="GeneratedStaticColliders" type="Node3D" parent="." index="1" unique_id=216330403]
+
+[node name="Body_Collision" type="StaticBody3D" parent="GeneratedStaticColliders" index="0" unique_id=479396625]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18002719, 0.9931391, 0.44650006)
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GeneratedStaticColliders/Body_Collision" index="0" unique_id=1464015005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.115542054, 0.13424069, -0.49899006)
+shape = SubResource("BoxShape3D_2tsfk")
+
+[node name="Mirrored" type="Node3D" parent="GeneratedStaticColliders" index="1" unique_id=1614802769]
+
+[node name="Body_Collision" type="StaticBody3D" parent="GeneratedStaticColliders/Mirrored" index="0" unique_id=1626524360]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18002719, 0.9931391, 2.9072096)
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GeneratedStaticColliders/Mirrored/Body_Collision" index="0" unique_id=640401314]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08566463, 0.0695588, -0.49899006)
+shape = SubResource("BoxShape3D_2tsfk")
+
+[node name="Body_Collision2" type="StaticBody3D" parent="GeneratedStaticColliders" index="2" unique_id=1481096098]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18002719, 3.0220363, 0.44650006)
+collision_mask = 0
+
+[node name="DebugMesh" type="MeshInstance3D" parent="GeneratedStaticColliders/Body_Collision2" index="0" unique_id=574223288]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.022278905, -0.61586905, 0.7247187)
+visible = false
+material_override = SubResource("StandardMaterial3D_bas1m")
+mesh = SubResource("BoxMesh_eat6y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GeneratedStaticColliders/Body_Collision2" index="1" unique_id=1811288980]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.49035645, 0.7467499)
+shape = SubResource("BoxShape3D_mnt2l")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="GeneratedStaticColliders" index="3" unique_id=742551328]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GeneratedStaticColliders/StaticBody3D" index="0" unique_id=867216146]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.41409147, 3.0930395, 1.3175964)
+shape = SubResource("BoxShape3D_vdrtp")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="GeneratedStaticColliders/StaticBody3D" index="1" unique_id=299851821]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.72042215, 3.0930395, 1.3175964)
+shape = SubResource("BoxShape3D_vdrtp")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="GeneratedStaticColliders/StaticBody3D" index="2" unique_id=1538563820]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18611717, 3.054439, 3.0782945)
+shape = SubResource("BoxShape3D_1x1jf")

@@ -1,0 +1,61 @@
+[gd_scene load_steps=3 format=3 uid="uid://dddgcbcwon5vf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ngbsh"]
+bg_color = Color(0.666569, 0.666569, 0.666569, 1)
+border_width_left = 12
+border_width_top = 6
+border_width_right = 12
+border_width_bottom = 6
+border_color = Color(0.455114, 0, 0.0106854, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 25.0
+expand_margin_top = 15.0
+expand_margin_right = 25.0
+expand_margin_bottom = 15.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hnbki"]
+bg_color = Color(0.960351, 0.960351, 0.960351, 1)
+border_color = Color(0.695503, 0.695503, 0.695503, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 8.0
+expand_margin_right = 8.0
+expand_margin_bottom = 4.0
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="VSlider" type="VSlider" parent="." groups=["ground_adjust_slider"]]
+modulate = Color(0.936738, 0.933179, 0.933115, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.0
+offset_top = -270.0
+offset_right = 39.0
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/center_grabber = 0
+theme_override_constants/grabber_offset = 0
+theme_override_styles/slider = SubResource("StyleBoxFlat_ngbsh")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_hnbki")
+min_value = -1.0
+max_value = 1.0
+step = 0.01

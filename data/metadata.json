@@ -1,0 +1,12 @@
+{
+  "Valve_001": {
+	"name": "Valve 42",
+	"type": "Globe",
+	"size": "4 in"
+  },
+  "Valve_002": {
+	"name": "Valve 99",
+	"type": "Butterfly",
+	"size": "6 in"
+  }
+}

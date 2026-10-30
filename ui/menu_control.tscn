@@ -1,0 +1,208 @@
+[gd_scene format=3 uid="uid://4o6aivjs1doy"]
+
+[ext_resource type="Script" uid="uid://dvjuxhx6f0vc3" path="res://ui/menu_control.gd" id="1_g8v80"]
+[ext_resource type="Script" uid="uid://dueb680o15cv" path="res://scripts/ui/ARToggle.gd" id="1_sd7bj"]
+[ext_resource type="Script" uid="uid://bu4ucbtw05qg7" path="res://scripts/ui/MovementToggle.gd" id="3_8llq0"]
+[ext_resource type="Script" uid="uid://deu4k3nnhtowj" path="res://ui/item_visibility_toggle.gd" id="4_yjly4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g8v80"]
+bg_color = Color(0.08, 0.1, 0.14, 0.92)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g8v80"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8llq0"]
+bg_color = Color(0.122252, 0.122252, 0.122252, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cnhhi"]
+bg_color = Color(0, 0.278896, 0.100816, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yjly4"]
+bg_color = Color(0.169245, 0.169245, 0.169245, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="Control" type="Control" unique_id=668341697]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g8v80")
+
+[node name="Panel" type="Panel" parent="." unique_id=2028536571]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g8v80")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=363174942]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.0
+offset_top = -210.0
+offset_right = 450.0
+offset_bottom = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="MenuTitle" type="Label" parent="Panel/VBoxContainer" unique_id=1833215]
+layout_mode = 2
+theme_override_font_sizes/font_size = 42
+text = "Multiplayer Control Menu"
+horizontal_alignment = 1
+
+[node name="VRAR_HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1500447136]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+script = ExtResource("1_sd7bj")
+
+[node name="VRButton" type="Button" parent="Panel/VBoxContainer/VRAR_HBoxContainer" unique_id=333344790]
+material = SubResource("ShaderMaterial_g8v80")
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_8llq0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_cnhhi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yjly4")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_cnhhi")
+theme_override_styles/focus = SubResource("StyleBoxFlat_cnhhi")
+toggle_mode = true
+button_pressed = true
+text = "VR Mode"
+
+[node name="ARButton" type="Button" parent="Panel/VBoxContainer/VRAR_HBoxContainer" unique_id=2031691414]
+material = SubResource("ShaderMaterial_g8v80")
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_8llq0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_cnhhi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yjly4")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_cnhhi")
+theme_override_styles/focus = SubResource("StyleBoxFlat_cnhhi")
+toggle_mode = true
+text = "AR Mode"
+
+[node name="Movement_HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=608462577]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+script = ExtResource("3_8llq0")
+
+[node name="ControllerActivated" type="Button" parent="Panel/VBoxContainer/Movement_HBoxContainer" unique_id=940056118]
+material = SubResource("ShaderMaterial_g8v80")
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_8llq0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_cnhhi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yjly4")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_cnhhi")
+theme_override_styles/focus = SubResource("StyleBoxFlat_cnhhi")
+toggle_mode = true
+button_pressed = true
+text = "Controller Move ON"
+
+[node name="ToyModelMode" type="Button" parent="Panel/VBoxContainer/Movement_HBoxContainer" unique_id=500307876]
+material = SubResource("ShaderMaterial_g8v80")
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_8llq0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_cnhhi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yjly4")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_cnhhi")
+theme_override_styles/focus = SubResource("StyleBoxFlat_cnhhi")
+toggle_mode = true
+text = "Toy Model Mode"
+
+[node name="ItemVisibility_HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=359828673]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+script = ExtResource("4_yjly4")
+
+[node name="PIDVisible" type="Button" parent="Panel/VBoxContainer/ItemVisibility_HBoxContainer" unique_id=994463708]
+material = SubResource("ShaderMaterial_g8v80")
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_8llq0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_cnhhi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yjly4")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_cnhhi")
+theme_override_styles/focus = SubResource("StyleBoxFlat_cnhhi")
+toggle_mode = true
+text = "P&ID Review"
+
+[node name="PencilToggle" type="Button" parent="Panel/VBoxContainer/ItemVisibility_HBoxContainer" unique_id=994463709]
+material = SubResource("ShaderMaterial_g8v80")
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_8llq0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_cnhhi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yjly4")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_cnhhi")
+theme_override_styles/focus = SubResource("StyleBoxFlat_cnhhi")
+toggle_mode = true
+text = "Pencil"
+
+[node name="Multiplayer_HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=895400749]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="MultiplayerLabel" type="Label" parent="Panel/VBoxContainer/Multiplayer_HBoxContainer" unique_id=99397225]
+layout_mode = 2
+text = "Host Controls:"
+
+[node name="PlaceModelButton" type="Button" parent="Panel/VBoxContainer/Multiplayer_HBoxContainer" unique_id=1066244265]
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_8llq0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_cnhhi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yjly4")
+text = "Place Model VR
+(Host Only)"
+
+[node name="AdjustQRButton" type="Button" parent="Panel/VBoxContainer/Multiplayer_HBoxContainer" unique_id=936271860]
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_8llq0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_cnhhi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yjly4")
+text = "Adjust Position
+(Host Only)"
+
+[connection signal="toggled" from="Panel/VBoxContainer/VRAR_HBoxContainer/VRButton" to="Panel/VBoxContainer/VRAR_HBoxContainer" method="_on_vr_button_toggled"]
+[connection signal="toggled" from="Panel/VBoxContainer/VRAR_HBoxContainer/ARButton" to="Panel/VBoxContainer/VRAR_HBoxContainer" method="_on_ar_button_toggled"]
+[connection signal="toggled" from="Panel/VBoxContainer/Movement_HBoxContainer/ControllerActivated" to="Panel/VBoxContainer/Movement_HBoxContainer" method="_on_controller_activated_toggled"]
+[connection signal="toggled" from="Panel/VBoxContainer/Movement_HBoxContainer/ToyModelMode" to="Panel/VBoxContainer/Movement_HBoxContainer" method="_on_toy_model_mode_toggled"]
+[connection signal="toggled" from="Panel/VBoxContainer/ItemVisibility_HBoxContainer/PIDVisible" to="Panel/VBoxContainer/ItemVisibility_HBoxContainer" method="_on_pid_visible_toggled"]
+[connection signal="pressed" from="Panel/VBoxContainer/Multiplayer_HBoxContainer/PlaceModelButton" to="." method="_on_place_model_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Multiplayer_HBoxContainer/AdjustQRButton" to="." method="_on_adjust_position_pressed"]

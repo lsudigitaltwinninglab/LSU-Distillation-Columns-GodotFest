@@ -1,0 +1,77 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
+[application]
+
+config/name="LSU Distillation Columns XR/AR"
+run/main_scene="res://scenes/main/ar_multiplayer.tscn"
+config/features=PackedStringArray("4.7", "Mobile")
+config/icon="res://assets/materials/images/icon.svg"
+
+[autoload]
+
+XRToolsUserSettings="*uid://b8akjyvc0c2oy"
+XRToolsRumbleManager="*uid://d2igbp7ro045h"
+MetadataManager="*res://scripts/MetadataManager.gd"
+MenuControl="*res://ui/menu_control.gd"
+ServiceDiscovery="*uid://ftudrqpa8um5"
+SpectatorMode="*res://scripts/spectator/spectator_mode.gd"
+
+[dotnet]
+
+project/assembly_name="LSU Distillation Columns AR"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gd-blender-3d-shortcuts/plugin.cfg", "res://addons/godot-xr-tools/plugin.cfg", "res://addons/lan_servers_discovery/plugin.cfg")
+
+[global_group]
+
+pid_ui="Associated with the P&ID UI"
+ground_adjust_slider=""
+xr_camera=""
+platforms="Objects the Player can stand on"
+
+[layer_names]
+
+3d_physics/layer_1="Static World"
+3d_physics/layer_2="Dynamic World"
+3d_physics/layer_3="Pickable Objects"
+3d_physics/layer_4="Wall Walking"
+3d_physics/layer_5="Grappling Target"
+3d_physics/layer_17="Held Objects"
+3d_physics/layer_18="Player Hands"
+3d_physics/layer_19="Grab Handles"
+3d_physics/layer_20="Player Body"
+3d_physics/layer_21="Pointable Objects"
+3d_physics/layer_22="Hand Pose Areas"
+3d_physics/layer_23="UI Objects"
+3d_physics/layer_25="AR Toggle"
+
+[rendering]
+
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
+
+[xr]
+
+openxr/enabled=true
+openxr/foveation_level=2
+openxr/foveation_dynamic=true
+openxr/extensions/spatial_entity/enabled=true
+openxr/extensions/spatial_entity/enable_marker_tracking=true
+openxr/extensions/spatial_entity/enable_builtin_marker_tracking=true
+shaders/enabled=true
+openxr/extensions/meta/passthrough=true
+openxr/extensions/meta/marker_tracking=true

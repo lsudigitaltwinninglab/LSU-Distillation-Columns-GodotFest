@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://cuenbp5tc1amb"]
+
+[ext_resource type="PackedScene" uid="uid://qbmx03iibuuu" path="res://addons/godot-xr-tools/staging/scene_base.tscn" id="1_scene_base"]
+[ext_resource type="Script" uid="uid://bwoaowcr11ieq" path="res://scenes/network/lobby/network_lobby.gd" id="2_lobby_script"]
+[ext_resource type="PackedScene" uid="uid://bq86r4yll8po" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_fullglove_low.tscn" id="3_left_hand"]
+[ext_resource type="PackedScene" uid="uid://xqimcf20s2jp" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_fullglove_low.tscn" id="4_right_hand"]
+[ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="5_movement"]
+[ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="6_turn"]
+[ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="7_pointer"]
+[ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="8_player_body"]
+[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="9_viewport"]
+[ext_resource type="PackedScene" uid="uid://cdov5tyujosyg" path="res://scenes/network/lobby/lobby_2d.tscn" id="10_lobby_ui"]
+[ext_resource type="PackedScene" uid="uid://dgdb1texynduw" path="res://addons/godot-xr-tools/objects/virtual_keyboard.tscn" id="11_keyboard"]
+[ext_resource type="PackedScene" uid="uid://ba6rrhwh7kn8c" path="res://addons/godot-xr-avatar/xr-tools/avatar_driver_player_body.tscn" id="12_avatar_driver"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_env"]
+sky_material = SubResource("ProceduralSkyMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_lobby"]
+background_mode = 2
+sky = SubResource("Sky_env")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
+albedo_color = Color(0.3, 0.35, 0.4, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+material = SubResource("StandardMaterial3D_floor")
+size = Vector2(20, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(20, 0.1, 20)
+
+[node name="NetworkLobby" unique_id=1246430191 instance=ExtResource("1_scene_base")]
+script = ExtResource("2_lobby_script")
+
+[node name="XRCamera3D" parent="XROrigin3D" index="0"]
+cull_mask = 1048573
+
+[node name="LeftHand" parent="XROrigin3D/LeftHand" index="0" unique_id=19231606 instance=ExtResource("3_left_hand")]
+
+[node name="MovementDirect" parent="XROrigin3D/LeftHand" index="1" unique_id=809952682 instance=ExtResource("5_movement")]
+strafe = true
+
+[node name="FunctionPointer" parent="XROrigin3D/LeftHand" index="2" unique_id=118089581 instance=ExtResource("7_pointer")]
+show_laser = 2
+laser_length = 3
+collide_with_areas = true
+
+[node name="RightHand" parent="XROrigin3D/RightHand" index="0" unique_id=485064674 instance=ExtResource("4_right_hand")]
+
+[node name="MovementTurn" parent="XROrigin3D/RightHand" index="1" unique_id=1013797092 instance=ExtResource("6_turn")]
+
+[node name="FunctionPointer" parent="XROrigin3D/RightHand" index="2" unique_id=1789030670 instance=ExtResource("7_pointer")]
+show_laser = 2
+laser_length = 3
+collide_with_areas = true
+
+[node name="PlayerBody" parent="XROrigin3D" index="3" unique_id=198512492 instance=ExtResource("8_player_body")]
+
+[node name="AvatarDriverPlayerBody" parent="XROrigin3D" index="4" unique_id=589077441 instance=ExtResource("12_avatar_driver")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="1" unique_id=1914924597]
+environment = SubResource("Environment_lobby")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="2" unique_id=1944378323]
+transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 0, 3, 0)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="Map" type="Node3D" parent="." index="3" unique_id=309073252]
+
+[node name="Floor" type="StaticBody3D" parent="Map" index="0" unique_id=488661315]
+
+[node name="FloorMesh" type="MeshInstance3D" parent="Map/Floor" index="0" unique_id=2019514778]
+mesh = SubResource("PlaneMesh_floor")
+
+[node name="FloorCollision" type="CollisionShape3D" parent="Map/Floor" index="1" unique_id=426763013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_floor")
+
+[node name="LobbyMenu" parent="Map" index="1" unique_id=1900844500 instance=ExtResource("9_viewport")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -3)
+screen_size = Vector2(2, 1.6)
+scene = ExtResource("10_lobby_ui")
+viewport_size = Vector2(900, 750)
+transparent = 0
+unshaded = true
+scene_properties_keys = PackedStringArray("lobby_2d.gd")
+
+[node name="VirtualKeyboard" parent="Map" index="2" unique_id=1936936725 instance=ExtResource("11_keyboard")]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 1, -1)
+screen_size = Vector2(0.8, 0.4)
+scene_properties_keys = PackedStringArray("virtual_keyboard_2d.gd")

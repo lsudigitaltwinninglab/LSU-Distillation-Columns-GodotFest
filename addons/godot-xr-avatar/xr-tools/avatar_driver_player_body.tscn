@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ba6rrhwh7kn8c"]
+
+[ext_resource type="Script" uid="uid://c34kfli8pbcxp" path="res://addons/godot-xr-avatar/xr-tools/avatar_driver_player_body.gd" id="1_tpw5o"]
+
+[node name="AvatarDriverPlayerBody" type="Node"]
+process_physics_priority = -95
+script = ExtResource("1_tpw5o")

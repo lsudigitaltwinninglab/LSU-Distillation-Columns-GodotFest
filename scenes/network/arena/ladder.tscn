@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://dpy5i2tk2pgf"]
+
+[ext_resource type="Script" uid="uid://vq22m2fg2gyf" path="res://addons/godot-xr-tools/objects/climbable.gd" id="1_climbable"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_main"]
+size = Vector3(0.7, 3, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rail"]
+size = Vector3(0.7, 3, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rung"]
+size = Vector3(0.5, 0.05, 0.08)
+
+[node name="Ladder" type="Node3D" unique_id=685544491]
+visible = false
+
+[node name="Climbable" type="StaticBody3D" parent="." unique_id=334875949]
+collision_layer = 262144
+collision_mask = 0
+script = ExtResource("1_climbable")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Climbable" unique_id=1772790947]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_main")
+
+[node name="Rail" type="MeshInstance3D" parent="." unique_id=562125123]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+visible = false
+mesh = SubResource("BoxMesh_rail")
+
+[node name="Rung1" type="MeshInstance3D" parent="." unique_id=941934255]
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung2" type="MeshInstance3D" parent="." unique_id=928861297]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung3" type="MeshInstance3D" parent="." unique_id=2120736124]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung4" type="MeshInstance3D" parent="." unique_id=438121552]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung5" type="MeshInstance3D" parent="." unique_id=330142702]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung6" type="MeshInstance3D" parent="." unique_id=1613440386]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung7" type="MeshInstance3D" parent="." unique_id=43588995]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung8" type="MeshInstance3D" parent="." unique_id=1944824819]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung9" type="MeshInstance3D" parent="." unique_id=2005329919]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung10" type="MeshInstance3D" parent="." unique_id=432933602]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung11" type="MeshInstance3D" parent="." unique_id=371488808]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung12" type="MeshInstance3D" parent="." unique_id=1836703449]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung13" type="MeshInstance3D" parent="." unique_id=1787399482]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung14" type="MeshInstance3D" parent="." unique_id=2045642165]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung15" type="MeshInstance3D" parent="." unique_id=1506489434]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung16" type="MeshInstance3D" parent="." unique_id=2108297212]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung17" type="MeshInstance3D" parent="." unique_id=770426584]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung18" type="MeshInstance3D" parent="." unique_id=666479666]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung19" type="MeshInstance3D" parent="." unique_id=795094888]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung20" type="MeshInstance3D" parent="." unique_id=1642824906]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
+mesh = SubResource("BoxMesh_rung")
+
+[node name="Rung21" type="MeshInstance3D" parent="." unique_id=228394034]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+mesh = SubResource("BoxMesh_rung")

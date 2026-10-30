@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "Plant Tank Trim"
+albedo_color = Color(0.654356, 0.654356, 0.654356, 1)
+metallic = 0.55
+roughness = 0.45

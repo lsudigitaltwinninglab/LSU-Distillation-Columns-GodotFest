@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "Plant Tank Body"
+albedo_color = Color(0.042485, 0.292142, 0.191367, 1)
+metallic = 0.45
+roughness = 0.5

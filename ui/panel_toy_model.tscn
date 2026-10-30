@@ -1,0 +1,191 @@
+[gd_scene format=3 uid="uid://toy_model_panel"]
+
+[ext_resource type="Script" path="res://ui/panel_toy_model.gd" id="1_toy_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.15, 0.15, 0.15, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+bg_color = Color(0.2, 0.4, 0.6, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
+bg_color = Color(0.3, 0.5, 0.7, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_pressed"]
+bg_color = Color(0.1, 0.6, 0.3, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slider"]
+bg_color = Color(0.3, 0.3, 0.3, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lock_unlocked"]
+bg_color = Color(0.4, 0.4, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lock_locked"]
+bg_color = Color(0.7, 0.2, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="ToyModelPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_toy_script")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Model Scale Controls"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScaleLockContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ScaleLabel" type="Label" parent="Panel/VBoxContainer/ScaleLockContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "Scale: 1.0x"
+horizontal_alignment = 1
+
+[node name="LockButton" type="Button" parent="Panel/VBoxContainer/ScaleLockContainer"]
+layout_mode = 2
+toggle_mode = true
+theme_override_styles/normal = SubResource("StyleBoxFlat_lock_unlocked")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_lock_locked")
+text = "Unlocked"
+
+[node name="ScaleSlider" type="HSlider" parent="Panel/VBoxContainer"]
+layout_mode = 2
+min_value = 0.02
+max_value = 1.0
+step = 0.005
+value = 1.0
+theme_override_styles/slider = SubResource("StyleBoxFlat_slider")
+
+[node name="QRContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="QRStatus" type="Label" parent="Panel/VBoxContainer/QRContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "QR: not detected"
+horizontal_alignment = 1
+
+[node name="QRLockButton" type="Button" parent="Panel/VBoxContainer/QRContainer"]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+text = "QR Lock: ON"
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ResetSpawnButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+text = "Reset Model"
+
+[node name="HSeparator3" type="HSeparator" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="KeepScaleButton" type="Button" parent="Panel/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+text = "Keep Size"
+
+[node name="ResetScaleButton" type="Button" parent="Panel/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+text = "Reset Size"
+
+[node name="HSeparator4" type="HSeparator" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ControlsHint" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Grip: grab & turn model
+Both grips: pinch to scale
+L stick: slide  |  R stick: turn / size"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[connection signal="toggled" from="Panel/VBoxContainer/ScaleLockContainer/LockButton" to="." method="_on_lock_button_toggled"]
+[connection signal="toggled" from="Panel/VBoxContainer/QRContainer/QRLockButton" to="." method="_on_qr_lock_button_toggled"]
+[connection signal="value_changed" from="Panel/VBoxContainer/ScaleSlider" to="." method="_on_scale_slider_value_changed"]
+[connection signal="pressed" from="Panel/VBoxContainer/ResetSpawnButton" to="." method="_on_reset_spawn_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/ButtonsContainer/KeepScaleButton" to="." method="_on_keep_scale_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/ButtonsContainer/ResetScaleButton" to="." method="_on_reset_scale_button_pressed"]

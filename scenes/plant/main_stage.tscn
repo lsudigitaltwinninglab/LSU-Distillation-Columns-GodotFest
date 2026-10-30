@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://u3v5a4tfvjoi"]
+
+[ext_resource type="Script" uid="uid://pucss23t65ui" path="res://scripts/plant/main_stage.gd" id="1_ii2w4"]
+[ext_resource type="Script" uid="uid://bja3omlm5hi16" path="res://scripts/plant/scene_collection.gd" id="3_cjxl0"]
+[ext_resource type="Script" uid="uid://cge8xmlf6mabw" path="res://scripts/plant/ground_plane_adjustment.gd" id="4_tel8y"]
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="5_gxg1u"]
+[ext_resource type="PackedScene" uid="uid://cp5vy1fncqkkd" path="res://scenes/equipment/pid_w_hotspots.tscn" id="6_vbgqx"]
+[ext_resource type="PackedScene" uid="uid://d3cftf4dlko37" path="res://assets/models/Existing Civil Structures.glb" id="8_6jxnt"]
+[ext_resource type="PackedScene" uid="uid://57q7hhomocdh" path="res://addons/godot-xr-tools/objects/world_grab_area.tscn" id="9_4l43i"]
+[ext_resource type="Script" uid="uid://dbyvusi8sgb5n" path="res://scripts/plant/toy_model_mode.gd" id="9_ii2w4"]
+[ext_resource type="PackedScene" uid="uid://cip328fy377cq" path="res://scenes/plant/lsu_distillation_lab.tscn" id="10_jcncv"]
+[ext_resource type="PackedScene" uid="uid://drlg85qifk8v5" path="res://scenes/equipment/distillation_hotspots.tscn" id="11_hotspots"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5vw27"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0.00069389754, 0.00069389766, 0.0006938976, 1)
+sky_energy_multiplier = 1.17
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0, 0, 0, 1)
+sun_angle_max = 0.0
+
+[sub_resource type="Sky" id="Sky_kek77"]
+sky_material = SubResource("ProceduralSkyMaterial_5vw27")
+
+[sub_resource type="Environment" id="Environment_4c57u"]
+background_mode = 2
+background_color = Color(0.06798274, 0.06798274, 0.06798273, 1)
+background_energy_multiplier = 0.79
+sky = SubResource("Sky_kek77")
+ambient_light_source = 2
+ambient_light_color = Color(0.88, 0.9, 0.94, 1)
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 2.2
+tonemap_mode = 3
+adjustment_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w1u22"]
+albedo_color = Color(5.41471e-07, 0.368881, 0.225698, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_lquwl"]
+material = SubResource("StandardMaterial3D_w1u22")
+size = Vector2(30, 30)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1bvp3"]
+size = Vector3(128.006, 1, 123.748)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_272bh"]
+radius = 100.0
+
+[node name="Main" type="Node3D" unique_id=1575784447]
+script = ExtResource("1_ii2w4")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=738116959]
+environment = SubResource("Environment_4c57u")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=40706638]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0.421544, -0.363428, 0.830795, -0.268888, 0.824875, 0.497272, 0, 7.02498, 0)
+visible = false
+light_color = Color(0.95158, 0.95158, 0.95158, 1)
+light_energy = 1.691
+light_indirect_energy = 1.488
+
+[node name="FillLight" type="DirectionalLight3D" parent="." unique_id=1758492782]
+transform = Transform3D(0.86602515, 0.43301332, -0.24999955, 0.23837352, 0.08195913, 0.9677091, -0.43952066, 0.8976536, 0.03224028, 0, 5, 0)
+visible = false
+light_color = Color(0.92, 0.94, 0.98, 1)
+light_energy = 6.257
+
+[node name="SceneCollection" type="Node3D" parent="." unique_id=1086516170]
+script = ExtResource("3_cjxl0")
+pid_height = 0.0
+
+[node name="Ground" type="StaticBody3D" parent="SceneCollection" unique_id=1143016999 groups=["platforms"]]
+visible = false
+collision_mask = 1048575
+script = ExtResource("4_tel8y")
+y_scale = 0.5
+
+[node name="Ground_MeshInstance3D" type="MeshInstance3D" parent="SceneCollection/Ground" unique_id=161333341]
+transform = Transform3D(4.37353, 0, 0, 0, -1.80491e-07, 0.997993, 0, -4.12916, -4.36237e-08, 0, 0, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_lquwl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SceneCollection/Ground" unique_id=410197742]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_1bvp3")
+
+[node name="SampleBox" parent="SceneCollection" unique_id=232890096 instance=ExtResource("5_gxg1u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.912, 1.2618, -1.35207)
+visible = false
+picked_up_layer = 65537
+
+[node name="PickablePID" parent="SceneCollection" unique_id=1188472051 instance=ExtResource("6_vbgqx")]
+transform = Transform3D(0.999912, -5.77949e-10, -0.0132213, -5.77877e-10, 1, -8.7419e-08, 0.0132213, 8.7419e-08, 0.999912, 0.44072, 1.21445, -2.45421)
+visible = false
+release_mode = -1
+ranged_grab_method = 1
+second_hand_grab = 0
+
+[node name="ExistingStructures" parent="SceneCollection" unique_id=1797042543 instance=ExtResource("8_6jxnt")]
+visible = false
+
+[node name="WorldGrabArea" parent="." unique_id=2301791 instance=ExtResource("9_4l43i")]
+collision_layer = 327680
+gravity_space_override = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldGrabArea" unique_id=308535085]
+shape = SubResource("SphereShape3D_272bh")
+
+[node name="ToyModelMode" type="Node" parent="WorldGrabArea" unique_id=1656089943]
+script = ExtResource("9_ii2w4")
+
+[node name="Collision Volumes" type="Node3D" parent="." unique_id=741734021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.0385, -0.198826, 0)
+
+[node name="Node3D2" type="Node3D" parent="." unique_id=304054731]
+
+[node name="TestArea" type="Node3D" parent="." unique_id=1950958940]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.686085, 0, 39.5132)
+
+[node name="LSUDistillationLab" parent="." unique_id=972286193 instance=ExtResource("10_jcncv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.040819585, -9.536743e-07, -1.2290763)
+
+[node name="DistillationHotspots" parent="." unique_id=355381491 instance=ExtResource("11_hotspots")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.040819585, -9.536743e-07, -1.2290763)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1373458154]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7228382, 1.0425125, -2.7642376)
+visible = false

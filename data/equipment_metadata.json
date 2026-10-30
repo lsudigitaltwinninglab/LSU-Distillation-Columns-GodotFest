@@ -1,0 +1,444 @@
+{
+	"HA-102": {
+		"name": "Block Valve",
+		"type": "Gate",
+		"size": "2 in",
+		"other_info": "CS-150#"
+	},
+	"FT-101": {
+		"name": "Flow Meter",
+		"type": "Orifice Plate",
+		"size": "2 in",
+		"other_info": "CS-150#"
+	},
+	"HA-101": {
+		"name": "Block Valve",
+		"type": "Gate",
+		"size": "2 in",
+		"other_info": "CS-150#"
+	},
+	"CV-101": {
+		"name": "Control Valve",
+		"type": "Globe",
+		"size": "2 in",
+		"other_info": "CV = 4.7"
+	},
+	"20001-F": {
+		"name": "Pressure Vessel",
+		"type": "Vertical Drum",
+		"size": "4ft0in (ID), 8ft0in (T-T)",
+		"other_info": "CS, 100 psig at 400 degF"
+	},
+	"LS-101": {
+		"name": "Level Switch",
+		"type": "Tuning Fork",
+		"size": "",
+		"other_info": "Yokogawa XXX"
+	},
+	"LT-103": {
+		"name": "Level Transmitter",
+		"type": "GWR",
+		"size": "",
+		"other_info": "Emerson XXX"
+	},
+	"PSV-20101": {
+		"name": "Pressure Relief Valve",
+		"type": "Conventional",
+		"size": "1E2"
+	},
+	"FT-102": {
+		"name": "Flow Meter",
+		"type": "Vortex",
+		"size": "3 in",
+		"other_info": "Emerson XXX"
+	},
+	"TT-101": {
+		"name": "Temperature Transmitter",
+		"type": "Thermocouple",
+		"size": ""
+	},
+	"PT-102": {
+		"name": "Pressure Transmitter",
+		"type": "",
+		"size": "",
+		"other_info": "Rosemount XXX"
+	},
+	"HA-106": {
+		"name": "Block Valve",
+		"type": "Gate",
+		"size": "3 in",
+		"other_info": "CS-150#"
+	},
+	"CV-102": {
+		"name": "Control Valve",
+		"type": "Butterfly",
+		"size": "3 in",
+		"other_info": "CV = 60"
+	},
+	"HA-107": {
+		"name": "Block Valve",
+		"type": "Gate",
+		"size": "3 in",
+		"other_info": "CS-150#"
+	},
+	"HA-120": {
+		"name": "Check Valve",
+		"type": "Swing",
+		"size": "3 in",
+		"other_info": "CS-150#"
+	},
+	"HA-114": {
+		"name": "Block Valve",
+		"type": "Gate",
+		"size": "3 in",
+		"other_info": "CS-150#"
+	},
+	"HA-115": {
+		"name": "Block Valve",
+		"type": "Gate",
+		"size": "3 in",
+		"other_info": "CS-150#"
+	},
+	"HA-111": {
+		"name": "Check Valve",
+		"type": "Swing",
+		"size": "3 in",
+		"other_info": "CS-150#"
+	},
+	"CV-103": {
+		"name": "Control Valve",
+		"type": "Ball",
+		"size": "3 in",
+		"other_info": "CV = 60"
+	},
+	"TK101": {
+		"name": "Feed Tank",
+		"type": "Vessel",
+		"range": "",
+		"other_info": "Be sure it is at least half full"
+	},
+	"TK102": {
+		"name": "Distillate Product Tank",
+		"type": "Vessel",
+		"range": "",
+		"other_info": ""
+	},
+	"TK103": {
+		"name": "Bottoms Product Tank",
+		"type": "Vessel",
+		"range": "",
+		"other_info": ""
+	},
+	"TT102": {
+		"name": "Temp. - bottom of column",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"TT103": {
+		"name": "TT103",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": "Column temperature point"
+	},
+	"TT104": {
+		"name": "TT104",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": "Column temperature point"
+	},
+	"TT105": {
+		"name": "TT105",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": "Column temperature point"
+	},
+	"TT106": {
+		"name": "Temp. - mid-column",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"TT107": {
+		"name": "Temp. - mid column",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"TT108": {
+		"name": "TT108",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": "Column temperature point"
+	},
+	"TT109": {
+		"name": "TT109",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": "Column temperature point"
+	},
+	"TT110": {
+		"name": "TT110",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": "Column temperature point"
+	},
+	"TT111": {
+		"name": "Temp. - top of column",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"FT105": {
+		"name": "Flow transmitter - steam",
+		"type": "Vortex",
+		"range": "0 to 80 kg/h at 6 bars",
+		"other_info": ""
+	},
+	"FT106": {
+		"name": "Flow transmitter - cooling water",
+		"type": "Orifice and DP Cell",
+		"range": "0 to 4000 L/h",
+		"other_info": ""
+	},
+	"PT101": {
+		"name": "Pressure transmitter - steam",
+		"type": "Gauge",
+		"range": "0 to 10 bars",
+		"other_info": ""
+	},
+	"P101": {
+		"name": "Feed pump",
+		"type": "Variable speed gear",
+		"range": "",
+		"other_info": ""
+	},
+	"P103": {
+		"name": "Bottoms pump",
+		"type": "Variable speed gear",
+		"range": "",
+		"other_info": ""
+	},
+	"FT102": {
+		"name": "Flow transmitter - reflux",
+		"type": "Orifice and DP Cell",
+		"range": "0 to 60 kg/h",
+		"other_info": ""
+	},
+	"FT103": {
+		"name": "Flow transmitter - bottoms",
+		"type": "Orifice and DP Cell",
+		"range": "0 to 30 kg/h",
+		"other_info": ""
+	},
+	"FT104": {
+		"name": "Flow transmitter - distillate",
+		"type": "Orifice and DP Cell",
+		"range": "0 to 20 kg/h",
+		"other_info": ""
+	},
+	"FT101": {
+		"name": "Flow transmitter - feed",
+		"type": "Orifice and DP Cell",
+		"range": "0 to 50 kg/h",
+		"other_info": ""
+	},
+	"B101": {
+		"name": "Reboiler",
+		"type": "Heat exchanger",
+		"range": "",
+		"other_info": "Keep liquid level in sightglass"
+	},
+	"C100": {
+		"name": "Distillation Column C100",
+		"type": "Packed column",
+		"range": "",
+		"other_info": "Main fractionation column"
+	},
+	"C100-R2": {
+		"name": "Fractionation Section"
+	},
+	"E102": {
+		"name": "Feed preheater",
+		"type": "Heat exchanger",
+		"range": "",
+		"other_info": ""
+	},
+	"V109": {
+		"name": "V109"
+	},
+	"V108": {
+		"name": "V108"
+	},
+	"V107": {
+		"name": "V107"
+	},
+	"V106": {
+		"name": "V106"
+	},
+	"V117": {
+		"name": "V117"
+	},
+	"V141": {
+		"name": "V141"
+	},
+	"V140": {
+		"name": "V140"
+	},
+	"TT101": {
+		"name": "Temp. - reboiler",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"TT112": {
+		"name": "Temp. - distributor",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"TT113": {
+		"name": "Temp. - reflux drum",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"TT114": {
+		"name": "Temp. - reflux",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"TT115": {
+		"name": "Temp. - final distillate",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"TT116": {
+		"name": "Temp. - final bottoms",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"TT117": {
+		"name": "Temp. - CW to condenser",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"TT118": {
+		"name": "Temp. - CW from condenser",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"TT119": {
+		"name": "Temp. - steam to reboiler",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"TT120": {
+		"name": "Temp. - condensate from reboiler",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"TT121": {
+		"name": "Temp. - feed",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"TT122": {
+		"name": "Temp. - vent to vacuum",
+		"type": "RTD",
+		"range": "-50 to +250 C",
+		"other_info": ""
+	},
+	"DPT101": {
+		"name": "Pressure transmitter - column",
+		"type": "Differential",
+		"range": "0 to 20 mbar",
+		"other_info": ""
+	},
+	"LT101": {
+		"name": "Level transmitter - reboiler",
+		"type": "Differential",
+		"range": "0 to 100 mbar",
+		"other_info": ""
+	},
+	"LT102": {
+		"name": "Level transmitter - reflux drum",
+		"type": "Differential",
+		"range": "0 to 100 mbar",
+		"other_info": ""
+	},
+	"LT103": {
+		"name": "Level transmitter - side draw tank",
+		"type": "Differential",
+		"range": "0 to 100 mbar",
+		"other_info": ""
+	},
+	"PT102": {
+		"name": "Pressure transmitter - vacuum",
+		"type": "Absolute",
+		"range": "0 to 1200 mbar (absolute)",
+		"other_info": ""
+	},
+	"R101": {
+		"name": "Reflux drum",
+		"type": "Vessel",
+		"range": "",
+		"other_info": "Will overflow to condenser"
+	},
+	"P102": {
+		"name": "Reflux pump",
+		"type": "Variable speed gear",
+		"range": "",
+		"other_info": ""
+	},
+	"P104": {
+		"name": "Vacuum pump",
+		"type": "Centrifugal",
+		"range": "",
+		"other_info": ""
+	},
+	"P105": {
+		"name": "Transfer (to TK101) pump",
+		"type": "Centrifugal",
+		"range": "",
+		"other_info": ""
+	},
+	"P106": {
+		"name": "Side draw pump",
+		"type": "Variable speed gear",
+		"range": "",
+		"other_info": ""
+	},
+	"V146": {
+		"name": "Vacuum trap drain",
+		"type": "",
+		"range": "",
+		"other_info": "Empty before use"
+	},
+	"E101": {
+		"name": "Condenser",
+		"type": "Heat exchanger",
+		"range": "",
+		"other_info": ""
+	},
+	"E103": {
+		"name": "Bottoms cooler",
+		"type": "Heat exchanger",
+		"range": "",
+		"other_info": ""
+	},
+	"E104": {
+		"name": "Distillate cooler",
+		"type": "Heat exchanger",
+		"range": "",
+		"other_info": ""
+	}
+}

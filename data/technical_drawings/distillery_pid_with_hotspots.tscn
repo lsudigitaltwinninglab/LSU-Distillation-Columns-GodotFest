@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dn7fuw3exbbho"]
+
+[ext_resource type="PackedScene" uid="uid://dq3sds85kf1oq" path="res://data/technical_drawings/PIDwithHotspots.blend" id="1_blend"]
+[ext_resource type="Script" path="res://scripts/interactions/distillery_pid_setup.gd" id="2_setup"]
+
+[node name="DistilleryPID" type="Node3D" groups=["pid_ui"]]
+script = ExtResource("2_setup")
+
+[node name="PIDwithHotspots" parent="." instance=ExtResource("1_blend")]

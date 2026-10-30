@@ -1,0 +1,498 @@
+[gd_scene format=3 uid="uid://cdov5tyujosyg"]
+
+[ext_resource type="Script" uid="uid://d121pkqcw4q4a" path="res://scenes/network/lobby/lobby_2d.gd" id="1_lobby"]
+[ext_resource type="FontFile" uid="uid://dpllx4t628mfg" path="res://scenes/network/lobby/assets_sia/Geist_Mono/static/GeistMono-Bold.ttf" id="2_e76g8"]
+[ext_resource type="FontFile" uid="uid://di4libk3ooxlu" path="res://scenes/network/lobby/assets_sia/Geist_Mono/static/GeistMono-Regular.ttf" id="3_xixwj"]
+[ext_resource type="Shader" uid="uid://ddrn6tk3l4tve" path="res://scenes/network/lobby/glassy.gdshader" id="4_xixwj"]
+
+[sub_resource type="Shader" id="Shader_f2t0a"]
+code = "shader_type canvas_item;
+
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+uniform float blur_strength = 4.0;
+
+void fragment() {
+    vec2 uv = SCREEN_UV;
+    
+    vec4 col = vec4(0.0);
+    
+    col += texture(SCREEN_TEXTURE, uv + vec2(-0.002, 0.0));
+    col += texture(SCREEN_TEXTURE, uv + vec2(0.002, 0.0));
+    col += texture(SCREEN_TEXTURE, uv + vec2(0.0, -0.002));
+    col += texture(SCREEN_TEXTURE, uv + vec2(0.0, 0.002));
+    
+    col /= 4.0;
+
+    // Glass tint
+    col.rgb += vec3(0.1, 0.1, 0.1);
+    col.a = 0.6;
+
+    COLOR = col;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e76g8"]
+shader = SubResource("Shader_f2t0a")
+shader_parameter/blur_strength = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qifju"]
+bg_color = Color(1, 1, 1, 0.61960787)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0.3529412)
+corner_detail = 16
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f2t0a"]
+shader = ExtResource("4_xixwj")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wtp1k"]
+bg_color = Color(1, 1, 1, 0.8352941)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_color = Color(1, 1, 1, 0.8235294)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_y6bvf"]
+color = Color(0.80049086, 0.80049074, 0.80049074, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fknqt"]
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 12.0
+bg_color = Color(1, 1, 1, 0.8627451)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0627451, 0.52156866, 0.80784315, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xixwj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e76g8"]
+bg_color = Color(0.0627451, 0.52156866, 0.80784315, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f2t0a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y6bvf"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.58431375, 0.5882353, 0.5921569, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fknqt"]
+
+[node name="Lobby2D" type="Control" unique_id=299587601]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lobby")
+
+[node name="Panel" type="Panel" parent="." unique_id=1014769537]
+self_modulate = Color(0.95, 0.97, 1, 0.96)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1533970749]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -384.0
+offset_top = -260.0
+offset_right = 384.0
+offset_bottom = 289.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/VBoxContainer" unique_id=2100217446]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/VBoxContainer2" unique_id=1308800762]
+layout_mode = 2
+size_flags_vertical = 3
+stretch_mode = 4
+
+[node name="Panel" type="Panel" parent="Panel/VBoxContainer/VBoxContainer2/TextureRect" unique_id=2033243196]
+material = SubResource("ShaderMaterial_e76g8")
+layout_mode = 0
+offset_left = 150.0
+offset_top = -18.0
+offset_right = 626.0
+offset_bottom = 104.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qifju")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/VBoxContainer2" unique_id=770023777]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Title" type="Label" parent="Panel/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=165234144]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_e76g8")
+theme_override_font_sizes/font_size = 20
+text = "SYNGENTA MULTIPLAYER LOBBY"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Panel/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=150200117]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_xixwj")
+theme_override_font_sizes/font_size = 14
+text = "Host a session or join a LAN game in one tap."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=139741375]
+visible = false
+layout_mode = 2
+
+[node name="spacer" type="Control" parent="Panel/VBoxContainer" unique_id=792222046]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1635592557]
+custom_minimum_size = Vector2(768, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="Panel/VBoxContainer/HBoxContainer" unique_id=275552971]
+material = SubResource("ShaderMaterial_f2t0a")
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_wtp1k")
+
+[node name="ServerListSection" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel" unique_id=807924573]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 253.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel/ServerListSection" unique_id=1275381712]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel/ServerListSection/MarginContainer" unique_id=1361363335]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel/ServerListSection/MarginContainer/VBoxContainer" unique_id=939279338]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel/ServerListSection/MarginContainer/VBoxContainer/MarginContainer" unique_id=1640346941]
+layout_mode = 2
+
+[node name="ServerListLabel" type="Label" parent="Panel/VBoxContainer/HBoxContainer/Panel/ServerListSection/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1127110965]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.11372549, 0.08627451, 0.08627451, 1)
+theme_override_fonts/font = ExtResource("2_e76g8")
+theme_override_font_sizes/font_size = 16
+text = "Scan Servers"
+
+[node name="ServerListLabel2" type="Label" parent="Panel/VBoxContainer/HBoxContainer/Panel/ServerListSection/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1310710695]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2784314, 0.2901961, 0.37254903, 1)
+theme_override_fonts/font = ExtResource("3_xixwj")
+theme_override_font_sizes/font_size = 14
+text = "Available Games"
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer/HBoxContainer/Panel/ServerListSection/MarginContainer/VBoxContainer" unique_id=1292135960]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_y6bvf")
+
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel/ServerListSection/MarginContainer/VBoxContainer" unique_id=676832711]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel/ServerListSection/MarginContainer/VBoxContainer/MarginContainer2" unique_id=356440045]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ServerListScroll" type="ScrollContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel/ServerListSection/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer" unique_id=963233908]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="ServerList" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel/ServerListSection/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/ServerListScroll" unique_id=706772720]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="RefreshButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer/Panel/ServerListSection/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer" unique_id=894576498]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.0627451, 0.52156866, 0.80784315, 1)
+theme_override_colors/font_focus_color = Color(0.0627451, 0.52156866, 0.80784315, 1)
+theme_override_colors/font_pressed_color = Color(0.0627451, 0.52156866, 0.80784315, 1)
+theme_override_colors/font_hover_color = Color(0.0627451, 0.52156866, 0.80784315, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.0627451, 0.52156866, 0.80784315, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_fknqt")
+text = "Refresh LAN Games"
+
+[node name="VSeparator" type="VSeparator" parent="Panel/VBoxContainer/HBoxContainer" unique_id=428590014]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_xixwj")
+
+[node name="Panel2" type="Panel" parent="Panel/VBoxContainer/HBoxContainer" unique_id=561237297]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_wtp1k")
+
+[node name="HostSection" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel2" unique_id=199188717]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="Label Container" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel2/HostSection" unique_id=1943593215]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel2/HostSection/Label Container" unique_id=916631597]
+layout_mode = 2
+
+[node name="HostLabel" type="Label" parent="Panel/VBoxContainer/HBoxContainer/Panel2/HostSection/Label Container/VBoxContainer" unique_id=1660545533]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.11372549, 0.08627451, 0.08627451, 1)
+theme_override_fonts/font = ExtResource("2_e76g8")
+theme_override_font_sizes/font_size = 16
+text = "Host a Game"
+
+[node name="HostLabel_2" type="Label" parent="Panel/VBoxContainer/HBoxContainer/Panel2/HostSection/Label Container/VBoxContainer" unique_id=1897442192]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2784314, 0.2901961, 0.37254903, 1)
+theme_override_fonts/font = ExtResource("3_xixwj")
+theme_override_font_sizes/font_size = 14
+text = "Create a game yourself"
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer/HBoxContainer/Panel2/HostSection" unique_id=855072069]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_y6bvf")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel2/HostSection" unique_id=467890871]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel2/HostSection/MarginContainer" unique_id=1135262308]
+layout_mode = 2
+
+[node name="HostPortContainer" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel2/HostSection/MarginContainer/VBoxContainer" unique_id=987246382]
+layout_mode = 2
+
+[node name="PortLabel" type="Label" parent="Panel/VBoxContainer/HBoxContainer/Panel2/HostSection/MarginContainer/VBoxContainer/HostPortContainer" unique_id=273389830]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.18039216, 0.1882353, 0.24313726, 1)
+theme_override_fonts/font = ExtResource("2_e76g8")
+text = "Port:"
+
+[node name="HostPort" type="SpinBox" parent="Panel/VBoxContainer/HBoxContainer/Panel2/HostSection/MarginContainer/VBoxContainer/HostPortContainer" unique_id=2059676438]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/up_icon_modulate = Color(0.41960785, 0.43137255, 0.4392157, 1)
+theme_override_colors/up_hover_icon_modulate = Color(0.27753785, 0.2865392, 0.29253784, 1)
+theme_override_colors/up_pressed_icon_modulate = Color(0.41960785, 0.43137255, 0.4392157, 1)
+theme_override_colors/down_icon_modulate = Color(0.41960785, 0.43137255, 0.4392157, 1)
+theme_override_colors/down_hover_icon_modulate = Color(0.2784314, 0.28627452, 0.29411766, 1)
+theme_override_colors/down_pressed_icon_modulate = Color(0.41960785, 0.43137255, 0.4392157, 1)
+min_value = 1024.0
+max_value = 65535.0
+value = 7777.0
+
+[node name="Control" type="Control" parent="Panel/VBoxContainer/HBoxContainer/Panel2/HostSection/MarginContainer/VBoxContainer" unique_id=1700711479]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HostButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer/Panel2/HostSection/MarginContainer/VBoxContainer" unique_id=1764058324]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_e76g8")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_e76g8")
+text = "Start Hosting"
+
+[node name="VSeparator2" type="VSeparator" parent="Panel/VBoxContainer/HBoxContainer" unique_id=1842102988]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_f2t0a")
+
+[node name="Panel3" type="Panel" parent="Panel/VBoxContainer/HBoxContainer" unique_id=359517296]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_wtp1k")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel3" unique_id=922064429]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="labelcontainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer" unique_id=699091157]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer/labelcontainer" unique_id=1497367200]
+layout_mode = 2
+
+[node name="JoinLabel" type="Label" parent="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer/labelcontainer/VBoxContainer" unique_id=1030234210]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.11372549, 0.08627451, 0.08627451, 1)
+theme_override_fonts/font = ExtResource("2_e76g8")
+theme_override_font_sizes/font_size = 16
+text = "Manual Join"
+
+[node name="JoinLabel2" type="Label" parent="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer/labelcontainer/VBoxContainer" unique_id=1064290072]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2784314, 0.2901961, 0.37254903, 1)
+theme_override_fonts/font = ExtResource("3_xixwj")
+theme_override_font_sizes/font_size = 14
+text = "Connect Directly"
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer" unique_id=2024347935]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_y6bvf")
+
+[node name="inputcontainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer" unique_id=2143797882]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="JoinSection" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer/inputcontainer" unique_id=2087071039]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="HostContainer" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer/inputcontainer/JoinSection" unique_id=1666256334]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HostLabel" type="Label" parent="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer/inputcontainer/JoinSection/HostContainer" unique_id=1793572267]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.18039216, 0.1882353, 0.24313726, 1)
+theme_override_fonts/font = ExtResource("2_e76g8")
+text = "Host:"
+
+[node name="JoinHost" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer/inputcontainer/JoinSection/HostContainer" unique_id=408137757]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_placeholder_color = Color(0.6120358, 0.6120366, 0.61203593, 0.6)
+theme_override_fonts/font = ExtResource("3_xixwj")
+theme_override_styles/normal = SubResource("StyleBoxFlat_y6bvf")
+placeholder_text = "IP Address"
+
+[node name="PortContainer" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer/inputcontainer/JoinSection" unique_id=116046697]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PortLabel" type="Label" parent="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer/inputcontainer/JoinSection/PortContainer" unique_id=1919241162]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.18039216, 0.1882353, 0.24313726, 1)
+theme_override_fonts/font = ExtResource("2_e76g8")
+text = "Port:"
+
+[node name="JoinPort" type="SpinBox" parent="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer/inputcontainer/JoinSection/PortContainer" unique_id=1974618069]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/up_icon_modulate = Color(0.41960785, 0.43137255, 0.4392157, 1)
+theme_override_colors/up_hover_icon_modulate = Color(0.24653, 0.25478637, 0.26028818, 1)
+theme_override_colors/up_pressed_icon_modulate = Color(0.41960785, 0.43137255, 0.4392157, 1)
+theme_override_colors/down_icon_modulate = Color(0.41960785, 0.43137255, 0.4392157, 1)
+theme_override_colors/down_hover_icon_modulate = Color(0.2799368, 0.28899452, 0.29503047, 1)
+theme_override_colors/down_pressed_icon_modulate = Color(0.41960785, 0.43137255, 0.4392157, 1)
+min_value = 1024.0
+max_value = 65535.0
+value = 7777.0
+
+[node name="Cospacentrol" type="Control" parent="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer/inputcontainer/JoinSection" unique_id=1819673500]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="JoinButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer/inputcontainer/JoinSection" unique_id=1475372583]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0627451, 0.52156866, 0.80784315, 1)
+theme_override_colors/font_focus_color = Color(0.0627451, 0.52156866, 0.80784315, 1)
+theme_override_colors/font_pressed_color = Color(0.0627451, 0.52156866, 0.80784315, 1)
+theme_override_fonts/font = ExtResource("2_e76g8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fknqt")
+text = "Join Game"
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/VBoxContainer" unique_id=1704688944]
+layout_mode = 2
+theme_override_constants/separation = 8
+theme_override_styles/separator = SubResource("StyleBoxEmpty_fknqt")
+
+[node name="QuitButton" type="Button" parent="Panel/VBoxContainer" unique_id=1621847531]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Exit"
+
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Panel/ServerListSection/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RefreshButton" to="." method="_on_refresh_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Panel2/HostSection/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Panel3/VBoxContainer/inputcontainer/JoinSection/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

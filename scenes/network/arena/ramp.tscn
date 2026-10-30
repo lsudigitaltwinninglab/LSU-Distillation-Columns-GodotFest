@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://biojdfp1sso1h"]
+
+[ext_resource type="Script" path="res://scripts/plant/walkable_ramp.gd" id="1_ramp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vp0ln"]
+size = Vector3(1.2, 0.08, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ramp"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 0.3, 0.1, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qyw5w"]
+size = Vector3(1.2, 0.08, 3)
+
+[node name="WalkableRamp" type="StaticBody3D" unique_id=2036756777]
+collision_mask = 0
+script = ExtResource("1_ramp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=825322511]
+shape = SubResource("BoxShape3D_vp0ln")
+
+[node name="DebugMesh" type="MeshInstance3D" parent="." unique_id=1653285614]
+material_override = SubResource("StandardMaterial3D_ramp")
+mesh = SubResource("BoxMesh_qyw5w")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=743302052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.19, 0)
+billboard = 1
+text = "RAMP"
+font_size = 64
