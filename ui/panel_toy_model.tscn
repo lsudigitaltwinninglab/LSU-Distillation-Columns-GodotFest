@@ -189,7 +189,7 @@ layout_mode = 2
 [node name="ControlsHint" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
-text = "Grip: grab & turn model
+text = "R grip: turn +  |  L grip: turn -
 Both grips: pinch to scale
 L stick: slide  |  R stick: turn / size"
 horizontal_alignment = 1

@@ -5,7 +5,7 @@ extends MultiplayerSceneBase
 ## Responsibilities:
 ## - Host-authoritative model sync via Map/ModelSyncManager
 ## - Arena room (Map/ArenaGround + Map/ArenaWalls): beige floor and walls; hidden in AR + toy mode; collision stays on
-## - MainStage plant floor mesh hidden at load; scripts/plant/main_stage.gd handles plant ground visibility
+## - MainStage plant floor mesh hidden and its collider turned off at load (the arena floor is the only floor)
 ## - Toy mode: hide demo clutter (ladders, PID, etc.) so only the scaled plant remains
 ## - Runtime stair box colliders + Syngenta collision volume bake for walking
 ## - Longer ENet timeouts so idle headsets do not drop clients
@@ -15,8 +15,9 @@ const LOBBY_SCENE := "res://scenes/network/lobby/network_lobby.tscn"
 ## Show the arena floor and walls? Off: they are invisible but still solid.
 const ARENA_ROOM_VISIBLE := false
 ## Explicit nodes to hide when toy model mode is on (clutter that isn't part of the plant).
+## Not the P&ID: toy mode turns it off through pid_visible_toggled, and showing it again on exit here
+## would bypass the P&ID toggle (it popped up under the model).
 const TOY_MODE_HIDE_PATHS := [
-	"Map/MainStage/SceneCollection/PickablePID",
 	"Map/MainStage/SceneCollection/SampleBox"
 ]
 ## Arena props that belong to the plant and must move, turn and scale with it (they were placed at the
@@ -245,10 +246,16 @@ func _configure_stair_walkables() -> void:
 
 
 func _hide_main_stage_ground_visual() -> void:
-	# Keep StaticBody3D + collision; hide mesh only (passthrough / toy table).
+	# Hide the plant's ground mesh (passthrough / toy table) and turn off its collider: the arena has its own
+	# fixed floor (Map/ArenaGround). The plant's ground is a 128 m slab that moves and turns with the model, so
+	# a QR lock lifting or tilting the model swung it up through the player and shoved them out of the arena.
 	var main_stage := get_node_or_null("Map/MainStage")
 	if not main_stage:
 		return
+	var ground_body := main_stage.get_node_or_null("SceneCollection/Ground") as StaticBody3D
+	if ground_body:
+		ground_body.collision_layer = 0
+		ground_body.collision_mask = 0
 	# main_stage.gd would otherwise switch this ground mesh back on in VR mode.
 	if "ground_always_hidden" in main_stage:
 		main_stage.ground_always_hidden = true

@@ -3,8 +3,8 @@ extends Node
 ## Toy Model Mode — keeps world-grab out of the way on Map/WorldGrabArea.
 ##
 ## Attached under WorldGrabArea in ar_network_arena.tscn (and main_stage.tscn).
-## Grip no longer grabs the *world* in toy mode: ToyModelManipulator moves, turns and scales the
-## model itself, so MovementWorldGrab is forced off whether toy mode is on or off.
+## Grip no longer grabs the *world* in toy mode: ToyModelManipulator turns the model in place with the
+## grips (and slides / turns / scales it with the sticks), so MovementWorldGrab is forced off whether toy mode is on or off.
 ##
 ## Does NOT change Area3D gravity (that caused slow upward drift). Player gravity in toy mode
 ## is handled by MovementToyModeGravity on XROrigin3D, enabled by ModelSyncManager.

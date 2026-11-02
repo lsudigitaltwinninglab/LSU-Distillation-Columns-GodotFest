@@ -11,7 +11,7 @@ extends Control
 ##
 ## - QR Lock → toy_qr_lock_changed → QRMarkerManager pins / releases the model on the QR code
 ##
-## Grip gestures and sticks (ToyModelManipulator) also drive the slider via toy_scale_changed.
+## Two-hand pinch and the sticks (ToyModelManipulator) also drive the slider via toy_scale_changed.
 
 @onready var scale_label: Label = $Panel/VBoxContainer/ScaleLockContainer/ScaleLabel
 @onready var scale_slider: HSlider = $Panel/VBoxContainer/ScaleSlider
@@ -102,6 +102,8 @@ func _refresh_qr_status() -> void:
 		# Tell "can't scan at all" apart from "nothing in view yet".
 		if qr and qr.has_method("is_qr_supported") and not qr.is_qr_supported():
 			qr_status.text = "QR: unavailable"
+		elif qr and qr.has_method("get_confirm_progress") and qr.get_confirm_progress() > 0.0:
+			qr_status.text = "QR: hold gaze %d%%" % roundi(qr.get_confirm_progress() * 100.0)
 		else:
 			qr_status.text = "QR: scanning (%d seen)" % (qr.markers_seen if "markers_seen" in qr else 0)
 		return

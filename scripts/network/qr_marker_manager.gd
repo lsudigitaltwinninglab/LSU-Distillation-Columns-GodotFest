@@ -9,12 +9,15 @@ class_name QRMarkerManager
 ##
 ## Flow:
 ## 1. OpenXR session begins → scan for marker-type XR trackers (including ones that already exist)
-## 2. On detect → create XRAnchor3D under XROrigin3D, notify ModelSyncManager
-## 3. Every frame the model is locked to the marker's position and rotation (scale is untouched,
-##    so toy-mode scaling happens about the QR code). Tiny tracking noise is ignored and real
-##    movement is smoothed, so the model stays rock-steady on the table.
-## 4. If the marker leaves view the model holds its last pose; if the tracker is removed the model
-##    stays where it was and re-locks when the code is seen again.
+## 2. On detect → create XRAnchor3D under XROrigin3D. The model is NOT moved yet.
+## 3. EVERY update from the code goes through look-to-confirm: the player keeps looking at it for
+##    confirm_look_time seconds (a ring fills up in its middle), then the model snaps to the code's
+##    pose as it was at that moment, and the host sends that pose to clients over a reliable RPC.
+##    That covers the first lock, switching to another code, and the locked code having moved (by
+##    more than UPDATE_MIN_DISTANCE / UPDATE_MIN_ANGLE). Nothing follows the code live, so tracking
+##    noise or a glimpse never moves the model.
+## 4. Re-locking (QR Lock button, toy mode on/off, a scale change) re-applies the last confirmed pose
+##    without reading the code again. If the tracker is removed the model stays where it was.
 ##
 ## The lock can be released (set_lock_enabled(false), the toy panel's "QR Lock" button) so the
 ## model can be repositioned by hand while the marker keeps being tracked.
@@ -49,21 +52,48 @@ signal lock_changed(locked: bool)
 ## Rotation offset in degrees (Y-axis) - adjust if model faces wrong direction
 @export var rotation_offset_y: float = 0.0
 
-## How quickly the model catches up with real marker movement (higher = snappier).
-@export var smoothing_speed: float = 14.0
-
 @export var conference_demo_mode: bool = true
 @export var marker_settle_time: float = 0.15
 @export var small_qr_mode: bool = true
 @export var small_qr_settle_time: float = 0.05
 
-## Marker jitter below these is ignored so the locked model doesn't shimmer.
-const POSITION_DEADBAND := 0.002  # meters
-const ROTATION_DEADBAND := deg_to_rad(0.3)
-## A marker pose this far from the model snaps instead of gliding (first lock, re-detection elsewhere).
-const SNAP_DISTANCE := 0.5  # meters
-## How often the host streams the locked pose to clients that have no QR lock of their own.
-const SYNC_INTERVAL := 0.1
+## Seconds the player must keep looking at a QR code before the model takes its pose.
+@export var confirm_look_time: float = 3.0
+## How far (degrees) from the centre of the player's view the code may be and still count as looked at.
+@export var confirm_look_angle: float = 15.0
+## Diameter of the progress ring drawn on the code, in meters.
+@export var confirm_ring_size: float = 0.12
+@export var confirm_ring_color: Color = Color(0.35, 0.9, 1.0, 1.0)
+
+## The locked code only offers an update (shows its ring) once it has moved further than tracking noise.
+const UPDATE_MIN_DISTANCE := 0.03  # meters
+const UPDATE_MIN_ANGLE := deg_to_rad(3.0)
+## At or above this size (1.0 = full) the plant collides with the player (main_stage.gd SMALL_MODEL_SCALE),
+## so a QR lock only sets where it stands and which way it faces: upright, on the arena floor.
+const WALKABLE_MODEL_SCALE := 0.5
+## Looking away drains the confirm progress this many times faster than looking fills it, so a
+## one-frame tracking dropout doesn't restart the count but a real look-away soon does.
+const CONFIRM_DRAIN_RATE := 2.0
+
+const CONFIRM_RING_SHADER := """
+shader_type spatial;
+render_mode unshaded, cull_disabled, depth_test_disabled, depth_draw_never, shadows_disabled;
+uniform float progress = 0.0;
+uniform vec4 fill_color : source_color = vec4(0.35, 0.9, 1.0, 1.0);
+uniform vec4 track_color : source_color = vec4(1.0, 1.0, 1.0, 0.25);
+void fragment() {
+	vec2 p = UV * 2.0 - 1.0;
+	float r = length(p);
+	float aa = fwidth(r);
+	float ring = smoothstep(0.68 - aa, 0.68, r) * (1.0 - smoothstep(0.95, 0.95 + aa, r));
+	// 0 at twelve o'clock, increasing clockwise.
+	float turn = mod(atan(p.x, -p.y) / 6.28318530718 + 1.0, 1.0);
+	vec4 color = turn <= progress ? fill_color : track_color;
+	ALBEDO = color.rgb;
+	ALPHA = color.a * ring;
+}
+"""
+static var _confirm_ring_shader: Shader
 
 ## How many marker trackers the headset has reported this session (shown on the toy panel for troubleshooting).
 var markers_seen: int = 0
@@ -79,11 +109,15 @@ var _model_sync_manager: Node = null
 var _active_anchor: XRAnchor3D = null  # The anchor we're following
 var _model_root: Node3D = null  # Cached reference to model
 
-# Smoothed locked pose, in XROrigin3D-local space
-var _locked_position: Vector3 = Vector3.ZERO
-var _locked_rotation: Quaternion = Quaternion.IDENTITY
-var _has_locked_pose: bool = false
-var _sync_timer: float = 0.0
+# The code's pose (XROrigin3D-local) when the player last confirmed it — the only marker data the model uses
+var _confirmed_marker: Transform3D = Transform3D.IDENTITY
+## Extra turn (radians, about world up) the toy grips added on top of the code's rotation; kept across re-locks.
+var _user_yaw: float = 0.0
+
+# Look-to-confirm: seconds each detected code has been looked at, and its ring
+var _confirm_progress: Dictionary = {}  # XRAnchor3D -> float
+var _confirm_rings: Dictionary = {}  # XRAnchor3D -> MeshInstance3D
+var _camera: Camera3D = null
 
 
 func _ready() -> void:
@@ -144,14 +178,116 @@ func _resolve_model_root() -> bool:
 	return is_instance_valid(_model_root)
 
 
-## Every frame: keep the model pinned to the marker (runs on all peers; each uses their own QR, no position sync).
+## Runs on all peers; each uses their own QR (no position sync).
 func _process(delta: float) -> void:
-	if not is_locking():
+	_update_look_to_confirm(delta)
+
+
+## Fills the ring of the code the player is looking at and drains the others; a full ring locks the
+## model to that code.
+func _update_look_to_confirm(delta: float) -> void:
+	if not auto_anchor_model or _marker_nodes.is_empty():
 		return
-	# Marker out of view: hold the last pose rather than following a stale one.
-	if not _active_anchor.get_has_tracking_data():
+	var looked_at := _looked_at_marker()
+	for anchor in _marker_nodes.values():
+		if not is_instance_valid(anchor):
+			continue
+		var seconds: float = _confirm_progress.get(anchor, 0.0)
+		if anchor == looked_at:
+			seconds += delta
+		else:
+			seconds = maxf(seconds - delta * CONFIRM_DRAIN_RATE, 0.0)
+		if seconds >= confirm_look_time:
+			seconds = 0.0
+			print("[QRMarkerManager] QR code confirmed by looking at it: ", anchor.tracker)
+			_anchor_model_to_marker(anchor, str(anchor.tracker))
+		_confirm_progress[anchor] = seconds
+		_show_confirm_ring(anchor, seconds / confirm_look_time)
+
+
+## The in-view code nearest the centre of the player's view (within confirm_look_angle) that has an
+## update to give (see _offers_update).
+func _looked_at_marker() -> XRAnchor3D:
+	if not is_instance_valid(_camera):
+		_camera = _xr_origin.get_node_or_null("XRCamera3D") as Camera3D if _xr_origin else null
+		if not _camera:
+			_camera = get_viewport().get_camera_3d()
+		if not _camera:
+			return null
+	var forward := -_camera.global_transform.basis.z
+	var best: XRAnchor3D = null
+	var best_angle := deg_to_rad(confirm_look_angle)
+	for anchor in _marker_nodes.values():
+		if not is_instance_valid(anchor) or not anchor.get_has_tracking_data() or not _offers_update(anchor):
+			continue
+		var to_marker: Vector3 = anchor.global_position - _camera.global_position
+		if to_marker.length() < 0.01:
+			continue
+		var angle := forward.angle_to(to_marker)
+		if angle < best_angle:
+			best = anchor
+			best_angle = angle
+	return best
+
+
+## Any other code can be confirmed; the locked one only once it has really moved (and the lock is on).
+func _offers_update(anchor: XRAnchor3D) -> bool:
+	if anchor != _active_anchor:
+		return true
+	if not lock_enabled or not _xr_origin:
+		return false
+	var live := _marker_local(anchor)
+	var turned := live.basis.get_rotation_quaternion().angle_to(_confirmed_marker.basis.get_rotation_quaternion())
+	return live.origin.distance_to(_confirmed_marker.origin) > UPDATE_MIN_DISTANCE or turned > UPDATE_MIN_ANGLE
+
+
+func _marker_local(anchor: XRAnchor3D) -> Transform3D:
+	var t := _xr_origin.global_transform.affine_inverse() * anchor.global_transform
+	return t.orthonormalized()
+
+
+func _show_confirm_ring(anchor: XRAnchor3D, fraction: float) -> void:
+	var ring: MeshInstance3D = _confirm_rings.get(anchor)
+	if fraction <= 0.0:
+		if ring:
+			ring.visible = false
 		return
-	_follow_marker(delta, false)
+	if not ring:
+		ring = _create_confirm_ring()
+		anchor.add_child(ring)
+		_confirm_rings[anchor] = ring
+	ring.visible = true
+	(ring.material_override as ShaderMaterial).set_shader_parameter("progress", fraction)
+
+
+## A flat ring lying on the code (the marker's Z axis points out of the code, like QuadMesh's normal).
+func _create_confirm_ring() -> MeshInstance3D:
+	if not _confirm_ring_shader:
+		_confirm_ring_shader = Shader.new()
+		_confirm_ring_shader.code = CONFIRM_RING_SHADER
+	var mat := ShaderMaterial.new()
+	mat.shader = _confirm_ring_shader
+	mat.set_shader_parameter("fill_color", confirm_ring_color)
+	mat.render_priority = 20
+
+	var quad := QuadMesh.new()
+	quad.size = Vector2(confirm_ring_size, confirm_ring_size)
+
+	var ring := MeshInstance3D.new()
+	ring.name = "ConfirmRing"
+	ring.mesh = quad
+	ring.material_override = mat
+	ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	ring.position = Vector3(0.0, 0.0, 0.002)  # just above the code
+	return ring
+
+
+## How far (0..1) the player is through confirming a new QR code by looking at it.
+func get_confirm_progress() -> float:
+	var best := 0.0
+	for seconds: float in _confirm_progress.values():
+		best = maxf(best, seconds / confirm_look_time)
+	return best
 
 
 func _find_node_by_class(node: Node, class_name_str: String) -> Node:
@@ -179,6 +315,8 @@ func _exit_tree() -> void:
 				node.get_parent().remove_child(node)
 			node.queue_free()
 	_marker_nodes.clear()
+	_confirm_progress.clear()
+	_confirm_rings.clear()
 
 
 ## Call this when XR session begins (from external script like multiplayer_scene_base)
@@ -271,12 +409,13 @@ func _on_tracker_removed(tracker_name: StringName, type: int) -> void:
 		# Clear active anchor if this was it
 		if _active_anchor == node:
 			_active_anchor = null
-			_has_locked_pose = false
 			if _model_sync_manager and _model_sync_manager.has_method("set_local_qr_anchor_mode"):
 				_model_sync_manager.set_local_qr_anchor_mode(false, "")
 			lock_changed.emit(false)
 			print("[QRMarkerManager] Active anchor removed - model stays where it was")
 
+		_confirm_progress.erase(node)
+		_confirm_rings.erase(node)  # freed with the anchor
 		_marker_nodes.erase(tr)
 		if is_instance_valid(node):
 			if node.get_parent():
@@ -322,10 +461,7 @@ func _add_marker(tr: OpenXRMarkerTracker) -> void:
 		var marker_transform = anchor.global_transform
 		marker_detected.emit(marker_transform, tr.name)
 		print("[QRMarkerManager] Marker detected at: ", anchor.global_position)
-
-		# Anchor the model to this QR code (each peer does this when they see the QR — no host→client sync)
-		if auto_anchor_model:
-			_anchor_model_to_marker(anchor, tr.name)
+		# The model locks to it once the player has looked at it long enough (_update_look_to_confirm).
 
 
 func _anchor_model_to_marker(anchor: XRAnchor3D, marker_data: String) -> void:
@@ -333,9 +469,10 @@ func _anchor_model_to_marker(anchor: XRAnchor3D, marker_data: String) -> void:
 		print("[QRMarkerManager] Cannot anchor - no ModelSyncManager")
 		return
 
-	# This marker is now the one the model follows
+	# This marker is now the one the model is locked to, at the pose it has right now
 	_active_anchor = anchor
-	_has_locked_pose = false
+	if _xr_origin:
+		_confirmed_marker = _marker_local(anchor)
 
 	# Set local anchor state only (no RPC) — each peer tracks their own QR
 	if _model_sync_manager.has_method("set_local_qr_anchor_mode"):
@@ -344,56 +481,85 @@ func _anchor_model_to_marker(anchor: XRAnchor3D, marker_data: String) -> void:
 	print("[QRMarkerManager] Locking model to QR code (local): ", marker_data)
 	print("[QRMarkerManager] Anchor position: ", anchor.global_position)
 
-	# Pin the model to the marker right away (no glide on first lock)
 	if lock_enabled:
-		_follow_marker(0.0, true)
+		_apply_confirmed_pose()
 	lock_changed.emit(is_locking())
 
 
-## Moves the model onto the marker's position and rotation (scale is preserved).
-## Works in XROrigin3D-local space so the pose can be streamed to clients unchanged.
-func _follow_marker(delta: float, snap: bool) -> void:
+## Moves the model onto the last confirmed marker pose (scale is preserved) and, on the host, sends it
+## reliably to clients. Works in XROrigin3D-local space so the pose can be sent to clients unchanged.
+## [param send]: false while the toy grips are turning it (ToyModelManipulator streams that itself).
+func _apply_confirmed_pose(send: bool = true) -> void:
 	if not _xr_origin or not _resolve_model_root():
 		return
+	# Client: if the host has placed the model relative to this same code, use that placement.
+	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+		if _model_sync_manager and _model_sync_manager.has_method("apply_qr_relative_pose") and _model_sync_manager.apply_qr_relative_pose():
+			return
 
-	var local_t := _xr_origin.global_transform.affine_inverse() * _active_anchor.global_transform
-	var target_position := local_t.origin
-	var target_rotation := _target_rotation(local_t.basis)
-
-	if snap or not _has_locked_pose or _locked_position.distance_to(target_position) > SNAP_DISTANCE:
-		_locked_position = target_position
-		_locked_rotation = target_rotation
-		_has_locked_pose = true
-	else:
-		var moved := _locked_position.distance_to(target_position) > POSITION_DEADBAND
-		var turned := _locked_rotation.angle_to(target_rotation) > ROTATION_DEADBAND
-		if moved or turned:
-			var weight := 1.0 - exp(-smoothing_speed * delta)
-			_locked_position = _locked_position.lerp(target_position, weight)
-			_locked_rotation = _locked_rotation.slerp(target_rotation, weight)
+	var target_position := _confirmed_marker.origin
+	var walkable := _is_model_walkable()
+	# The toy grips' turn on top of the code's own rotation, about the vertical through the code.
+	var target_rotation := Quaternion(Vector3.UP, _user_yaw) * _target_rotation(_confirmed_marker.basis, walkable)
+	if walkable:
+		# A full-size plant is solid to the player: keep it standing on the arena floor. Lifting it to
+		# the code's height (a table) or tilting it with the code drives its floors up through the player.
+		var floor_global := _xr_origin.global_transform * target_position
+		floor_global.y = _model_sync_manager.get_toy_floor_y() if _model_sync_manager.has_method("get_toy_floor_y") else 0.0
+		target_position = _xr_origin.global_transform.affine_inverse() * floor_global
 
 	var model_scale := _model_root.scale
-	_model_root.global_transform = _xr_origin.global_transform * Transform3D(Basis(_locked_rotation), _locked_position)
+	_model_root.global_transform = _xr_origin.global_transform * Transform3D(Basis(target_rotation), target_position)
 	_model_root.scale = model_scale
 
-	# Host: stream the locked pose for peers that are not locking to a QR code themselves.
-	_sync_timer += delta
-	if (snap or _sync_timer >= SYNC_INTERVAL) and multiplayer.has_multiplayer_peer() and multiplayer.is_server():
-		_sync_timer = 0.0
+	# Host: one reliable send for peers that are not locking to a QR code themselves.
+	if send and multiplayer.has_multiplayer_peer() and multiplayer.is_server():
 		if _model_sync_manager and _model_sync_manager.has_method("set_model_position_rotation_local_to_origin"):
-			_model_sync_manager.set_model_position_rotation_local_to_origin(_locked_position, _locked_rotation.get_euler())
+			_model_sync_manager.set_model_position_rotation_local_to_origin(target_position, target_rotation.get_euler(), true)
 
 
-func _target_rotation(marker_basis: Basis) -> Quaternion:
+## True while the model is big enough to collide with the player (main_stage.gd SMALL_MODEL_SCALE).
+func _is_model_walkable() -> bool:
+	if _model_sync_manager and _model_sync_manager.has_method("get_toy_scale_factor"):
+		return _model_sync_manager.get_toy_scale_factor() >= WALKABLE_MODEL_SCALE
+	return true
+
+
+func _target_rotation(marker_basis: Basis, force_upright: bool = false) -> Quaternion:
 	var basis := marker_basis.orthonormalized()
 	if marker_lies_flat:
 		# A marker's Z axis points out of the code; the model's Y axis is its up. Turn the model a
 		# quarter turn so it stands on the code instead of lying on its side.
 		basis = basis * Basis(Vector3.RIGHT, PI * 0.5)
 	var yaw_offset := deg_to_rad(rotation_offset_y)
-	if upright_only:
+	if upright_only or force_upright:
 		return Quaternion(Vector3.UP, basis.get_euler().y + yaw_offset)
 	return Quaternion(Vector3.UP, yaw_offset) * basis.get_rotation_quaternion()
+
+
+## The confirmed code as a level frame in the world: at the code, turned to its yaw. Every peer that
+## confirmed the same physical code has this frame at the same real-world spot, so a model pose taken
+## relative to it means the same place for everyone (see ModelSyncManager's QR-relative sync).
+func get_shared_frame() -> Transform3D:
+	var level := Basis(_target_rotation(_confirmed_marker.basis, true))
+	return _xr_origin.global_transform * Transform3D(level, _confirmed_marker.origin)
+
+
+func has_shared_frame() -> bool:
+	return is_locking() and _xr_origin != null
+
+
+## Toy grips / stick: turn the pinned model in place about the code. The caller syncs clients.
+func turn_locked_model(angle: float) -> void:
+	if not is_locking():
+		return
+	_user_yaw = wrapf(_user_yaw + angle, -PI, PI)
+	_apply_confirmed_pose(false)
+
+
+## "Reset Model": drop the toy grips' extra turn.
+func reset_user_turn() -> void:
+	_user_yaw = 0.0
 
 
 ## True while a QR code is tracked and the model is pinned to it.
@@ -402,16 +568,16 @@ func is_locking() -> bool:
 
 
 ## Pin the model to the QR code (true) or release it so it can be moved by hand (false).
-## The marker keeps being tracked either way; turning the lock back on snaps the model to the code.
+## The marker keeps being tracked either way; turning the lock back on puts the model back on the last
+## confirmed pose (look at the code again to take a new one).
 func set_lock_enabled(enabled: bool) -> void:
 	if lock_enabled == enabled:
 		return
 	lock_enabled = enabled
-	_has_locked_pose = false
 	if _model_sync_manager and _model_sync_manager.has_method("set_local_qr_anchor_mode"):
 		_model_sync_manager.set_local_qr_anchor_mode(is_locking(), get_marker_data())
 	if is_locking():
-		_follow_marker(0.0, true)
+		_apply_confirmed_pose()
 	lock_changed.emit(is_locking())
 	print("[QRMarkerManager] QR lock ", "ON" if enabled else "OFF")
 
@@ -437,12 +603,12 @@ func get_marker_data() -> String:
 	return ""
 
 
-## Snap the model onto the marker now (e.g. after its scale changed or toy mode started).
+## Put the model back on the last confirmed marker pose (e.g. after its scale changed or toy mode
+## started). Does not read the code again: new marker data only comes in through look-to-confirm.
 func force_reanchor_now() -> void:
 	if not is_locking():
 		return
-	_has_locked_pose = false
-	_follow_marker(0.0, true)
+	_apply_confirmed_pose()
 
 
 func _create_cube() -> MeshInstance3D:

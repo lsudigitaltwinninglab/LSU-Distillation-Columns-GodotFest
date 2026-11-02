@@ -164,7 +164,7 @@ size_flags_horizontal = 4
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_e76g8")
 theme_override_font_sizes/font_size = 20
-text = "SYNGENTA MULTIPLAYER LOBBY"
+text = "MULTIPLAYER LOBBY"
 horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="Panel/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=150200117]

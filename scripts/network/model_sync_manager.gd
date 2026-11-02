@@ -380,7 +380,7 @@ func _process(delta: float) -> void:
 	if _spectator_has_target and model_root:
 		_smooth_toward_spectator_target(delta)
 		return
-	if not multiplayer.is_server() and _smooth_position_rotation and model_root:
+	if not multiplayer.is_server() and _smooth_position_rotation and model_root and _anchor_mode != AnchorMode.QR_CODE:
 		var current_scale := model_root.scale
 		var pos := model_root.global_position
 		var rot := model_root.global_rotation
@@ -466,7 +466,8 @@ func set_model_position_rotation(new_position: Vector3, new_rotation: Vector3) -
 
 
 ## Sync model using position/rotation *local to XROrigin3D* so clients place the model in their own origin space (fixes model flying away on client when host moves).
-func set_model_position_rotation_local_to_origin(local_position: Vector3, local_rotation: Vector3) -> void:
+## [param reliable]: send over the reliable channel (one-off poses such as a newly confirmed QR lock).
+func set_model_position_rotation_local_to_origin(local_position: Vector3, local_rotation: Vector3, reliable: bool = false) -> void:
 	if not multiplayer.is_server():
 		return
 	if not _xr_origin:
@@ -479,7 +480,16 @@ func set_model_position_rotation_local_to_origin(local_position: Vector3, local_
 		model_root.scale = current_scale
 		_synced_model_transform = model_root.global_transform
 		_synced_model_scale = current_scale
-	_rpc_sync_model_position_rotation_local.rpc(local_position, local_rotation)
+	if reliable:
+		_rpc_sync_model_position_rotation_local_reliable.rpc(local_position, local_rotation)
+	else:
+		_rpc_sync_model_position_rotation_local.rpc(local_position, local_rotation)
+	_send_qr_relative_pose(reliable)
+
+
+@rpc("authority", "call_remote", "reliable")
+func _rpc_sync_model_position_rotation_local_reliable(local_position: Vector3, local_rotation: Vector3) -> void:
+	_rpc_sync_model_position_rotation_local(local_position, local_rotation)
 
 
 @rpc("authority", "call_remote", "unreliable")
@@ -690,6 +700,9 @@ func set_local_qr_anchor_mode(active: bool, marker_data: String) -> void:
 	if active:
 		_anchor_mode = AnchorMode.QR_CODE
 		_qr_marker_data = marker_data
+		# Stop easing toward the last host pose: on a client that pose is relative to the host's own
+		# tracking space, and _process would keep dragging the model off this peer's QR code.
+		_smooth_position_rotation = false
 	else:
 		_anchor_mode = AnchorMode.NONE
 		_qr_marker_data = ""
@@ -728,6 +741,12 @@ func get_qr_marker_data() -> String:
 
 @rpc("authority", "call_remote", "reliable")
 func _rpc_sync_anchor_mode(mode: int, marker_data: String) -> void:
+	# A client locked to its own QR code keeps that lock (the host's join-time state says NONE and is
+	# re-sent until it arrives, which can land after the client has already confirmed its code).
+	if not multiplayer.is_server() and _anchor_mode == AnchorMode.QR_CODE and mode != AnchorMode.QR_CODE:
+		var qr := get_tree().get_first_node_in_group("qr_marker_manager")
+		if qr and qr.has_method("is_locking") and qr.is_locking():
+			return
 	_anchor_mode = mode as AnchorMode
 	_qr_marker_data = marker_data
 	if mode != AnchorMode.QR_CODE:
@@ -960,6 +979,9 @@ func _on_local_reset_model_to_spawn() -> void:
 		cancel_placement()
 	model_root.global_transform = _spawn_model_transform
 	model_root.scale = _original_model_scale
+	var qr_manager = get_tree().get_first_node_in_group("qr_marker_manager")
+	if qr_manager and qr_manager.has_method("reset_user_turn"):
+		qr_manager.reset_user_turn()
 	_synced_model_transform = model_root.global_transform
 	_synced_model_scale = _original_model_scale
 	_refresh_qr_anchor_if_toy_mode()
@@ -1157,6 +1179,7 @@ func _sync_toy_pose_to_clients(final: bool) -> void:
 		return
 	_last_toy_sync_msec = now
 
+	_send_qr_relative_pose(final)
 	if not _xr_origin:
 		_rpc_sync_model_scale.rpc(model_root.scale)
 		_rpc_sync_model_position_rotation.rpc(model_root.global_position, model_root.global_rotation)
@@ -1174,6 +1197,62 @@ func _sync_toy_pose_to_clients(final: bool) -> void:
 func _flush_toy_sync() -> void:
 	_toy_sync_flush_pending = false
 	_sync_toy_pose_to_clients(true)
+
+
+### SYNC: Model pose relative to the QR code ###
+## Each headset has its own tracking space, so a pose relative to the host's XROrigin3D lands somewhere
+## else in a client's room. A client locked to the same physical QR code instead gets the model's pose
+## relative to that code (QRMarkerManager.get_shared_frame) and applies it to its own view of the code,
+## so host and client see the model in the same real-world spot — including after the host moves it.
+
+var _qr_relative_pose: Transform3D = Transform3D.IDENTITY
+var _has_qr_relative_pose: bool = false
+
+
+## Host: send the model's pose relative to the host's confirmed QR code (if the host has one).
+## Scale is not included; it travels in _rpc_sync_model_scale.
+func _send_qr_relative_pose(reliable: bool, peer_id: int = 0) -> void:
+	if not multiplayer.is_server() or not model_root:
+		return
+	var qr := get_tree().get_first_node_in_group("qr_marker_manager")
+	if not qr or not qr.has_method("has_shared_frame") or not qr.has_shared_frame():
+		return
+	var relative: Transform3D = (qr.get_shared_frame().affine_inverse() * model_root.global_transform).orthonormalized()
+	if peer_id != 0:
+		_rpc_sync_model_qr_relative_reliable.rpc_id(peer_id, relative)
+	elif reliable:
+		_rpc_sync_model_qr_relative_reliable.rpc(relative)
+	else:
+		_rpc_sync_model_qr_relative.rpc(relative)
+
+
+@rpc("authority", "call_remote", "reliable")
+func _rpc_sync_model_qr_relative_reliable(relative: Transform3D) -> void:
+	_rpc_sync_model_qr_relative(relative)
+
+
+@rpc("authority", "call_remote", "unreliable")
+func _rpc_sync_model_qr_relative(relative: Transform3D) -> void:
+	_qr_relative_pose = relative
+	_has_qr_relative_pose = true
+	apply_qr_relative_pose()
+
+
+## Client locked to its own QR code: place the model where the host has it relative to that code.
+## Returns false (nothing done) when there is no host pose yet or this client isn't QR-locked.
+func apply_qr_relative_pose() -> bool:
+	if multiplayer.is_server() or not _has_qr_relative_pose or not model_root or SpectatorMode.is_active():
+		return false
+	if _anchor_mode != AnchorMode.QR_CODE:
+		return false
+	var qr := get_tree().get_first_node_in_group("qr_marker_manager")
+	if not qr or not qr.has_method("has_shared_frame") or not qr.has_shared_frame():
+		return false
+	var model_scale := model_root.scale
+	model_root.global_transform = qr.get_shared_frame() * _qr_relative_pose
+	model_root.scale = model_scale
+	_synced_model_transform = model_root.global_transform
+	return true
 
 
 @rpc("authority", "call_remote", "reliable")
@@ -1301,6 +1380,7 @@ func _send_state_to_peer(peer_id: int) -> void:
 	# Send NONE for anchor mode so new peer relies on their own QR when they see it (no host QR position sync).
 	_rpc_sync_anchor_mode.rpc_id(peer_id, AnchorMode.NONE, "")
 	_rpc_sync_toy_model_mode.rpc_id(peer_id, _toy_model_active)
+	_send_qr_relative_pose(true, peer_id)
 	_rpc_state_complete.rpc_id(peer_id)
 	print("[ModelSyncManager] Sent state to peer (scale, no QR position sync) scale=", current_scale)
 

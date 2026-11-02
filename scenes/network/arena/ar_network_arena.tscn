@@ -45,7 +45,7 @@ walk_sounds = Array[AudioStream]([null])
 metadata/_custom_type_script = "uid://cj5mkk8dvqn4p"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_arena_ground"]
-size = Vector3(40, 0.5, 40)
+size = Vector3(48, 4, 48)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
 albedo_color = Color(0.28, 0.28, 0.3, 1)
@@ -62,14 +62,14 @@ material = SubResource("StandardMaterial3D_wall")
 size = Vector3(40, 5, 0.3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wall_ns"]
-size = Vector3(40, 20.87915, 0.3)
+size = Vector3(48, 100, 4)
 
 [sub_resource type="BoxMesh" id="BoxMesh_wall_ew"]
 material = SubResource("StandardMaterial3D_wall")
 size = Vector3(0.3, 5, 40)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wall_ew"]
-size = Vector3(0.3, 20.982422, 40)
+size = Vector3(4, 100, 48)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_prelx"]
 radius = 100.0
@@ -99,7 +99,7 @@ throttle_fps = 20.0
 unshaded = true
 
 [node name="Viewport2Din3D_ToyModel" parent="XROrigin3D/XRCamera3D" index="1" unique_id=1881996105 instance=ExtResource("16_viewport_2d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2822048, 0.11094499, -0.6999998)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2822048, 0.09221864, -0.6999998)
 visible = false
 screen_size = Vector2(0.305, 0.338)
 scene = ExtResource("23_toy_model_panel")
@@ -193,7 +193,7 @@ lag_speed = 0.6
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/ArenaGround" index="0" unique_id=1947741012]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
 shape = SubResource("BoxShape3D_arena_ground")
 
 [node name="Ground_MeshInstance3D" type="MeshInstance3D" parent="Map/ArenaGround" index="1" unique_id=960722039]
@@ -203,6 +203,7 @@ cast_shadow = 0
 mesh = SubResource("BoxMesh_floor")
 
 [node name="ArenaWalls" type="StaticBody3D" parent="Map" index="1" unique_id=2094411002]
+visible = false
 collision_mask = 0
 
 [node name="WallNorth" type="MeshInstance3D" parent="Map/ArenaWalls" index="0" unique_id=728700154]
@@ -212,7 +213,7 @@ cast_shadow = 0
 mesh = SubResource("BoxMesh_wall_ns")
 
 [node name="CollisionNorth" type="CollisionShape3D" parent="Map/ArenaWalls" index="1" unique_id=336976826]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.439575, -20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 45, -21.85)
 shape = SubResource("BoxShape3D_wall_ns")
 
 [node name="WallSouth" type="MeshInstance3D" parent="Map/ArenaWalls" index="2" unique_id=1274046407]
@@ -222,7 +223,7 @@ cast_shadow = 0
 mesh = SubResource("BoxMesh_wall_ns")
 
 [node name="CollisionSouth" type="CollisionShape3D" parent="Map/ArenaWalls" index="3" unique_id=104093400]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.2978325, 20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 45, 21.85)
 shape = SubResource("BoxShape3D_wall_ns")
 
 [node name="WallEast" type="MeshInstance3D" parent="Map/ArenaWalls" index="4" unique_id=18607444]
@@ -232,7 +233,7 @@ cast_shadow = 0
 mesh = SubResource("BoxMesh_wall_ew")
 
 [node name="CollisionEast" type="CollisionShape3D" parent="Map/ArenaWalls" index="5" unique_id=663095120]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 10.491211, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.85, 45, 0)
 shape = SubResource("BoxShape3D_wall_ew")
 
 [node name="WallWest" type="MeshInstance3D" parent="Map/ArenaWalls" index="6" unique_id=67849850]
@@ -242,7 +243,7 @@ cast_shadow = 0
 mesh = SubResource("BoxMesh_wall_ew")
 
 [node name="CollisionWest" type="CollisionShape3D" parent="Map/ArenaWalls" index="7" unique_id=572841619]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 10.2575655, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.85, 45, 0)
 shape = SubResource("BoxShape3D_wall_ew")
 
 [node name="Ladder" parent="Map" index="2" unique_id=1912935481 instance=ExtResource("22_fh6dq")]

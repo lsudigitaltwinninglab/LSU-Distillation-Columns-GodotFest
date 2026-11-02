@@ -39,6 +39,9 @@ func _on_pid_visible_toggled(toggled_on: bool) -> void:
 	pickable_pid.visible = toggled_on
 	# Toggle on/off all collosions with visibility
 	_set_pid_collisions(toggled_on)
+	# Hidden: take it out of physics entirely. It is a child of the model, so the hide position below
+	# moves and shrinks with it in toy mode (ending up right under the model) — that alone isn't enough.
+	pickable_pid.process_mode = Node.PROCESS_MODE_INHERIT if toggled_on else Node.PROCESS_MODE_DISABLED
 	
 	if toggled_on:
 		call_deferred("_position_pid_in_front")

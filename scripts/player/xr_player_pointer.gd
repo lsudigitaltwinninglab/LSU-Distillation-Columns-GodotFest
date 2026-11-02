@@ -3,7 +3,7 @@ extends XROrigin3D
 ## Local player rig (ar_network_arena.tscn XROrigin3D) — menu-driven movement and toy mode UX.
 ##
 ## - Movement providers: direct, turn, sprint, climb, world-grab (disabled until toy/coord modes)
-## - AR mode: disables left-stick locomotion
+## - AR mode: disables left-stick locomotion and right-stick turning
 ## - Toy mode: enables world-grab + toy panel; converts grip world_scale to model scale via MenuControl
 ## - Demo: hides host menu viewport on clients (host-only controls)
 ##
@@ -86,6 +86,7 @@ func _ready() -> void:
 	_connect_menu_signal()
 	if player_body:
 		saved_collision_mask = player_body.collision_mask # store collision mask to toggle on/off for ToyModelMode
+		_ignore_own_hands()
 	# Keep world-grab disabled in normal movement to prevent accidental flying/drift.
 	if movement_world_grab:
 		movement_world_grab.enabled = false
@@ -97,12 +98,61 @@ func _ready() -> void:
 	set_process(false)
 
 
+### Own hands never push the player ###
+## The player body collides with layers 1-25, which includes the hands' poke spheres (layer 18) and whatever
+## the hands are holding. A hand reaching into the body then made move_and_slide shove the player away
+## along the hand, sending them flying. Exempt everything the player's own hands carry.
+
+func _ignore_own_hands() -> void:
+	for hand_name in ["LeftHand", "RightHand"]:
+		var hand := get_node_or_null(hand_name)
+		if not hand:
+			continue
+		for node in hand.find_children("*", "PhysicsBody3D", true, false):
+			_set_ignored_by_body(node as PhysicsBody3D, true)
+		var pickup := hand.get_node_or_null("FunctionPickup") as XRToolsFunctionPickup
+		if pickup:
+			pickup.has_picked_up.connect(func(what): _set_ignored_by_body(what as PhysicsBody3D, true))
+			pickup.has_dropped.connect(func(): _release_held_exceptions())
+
+
+var _held_exceptions: Array[PhysicsBody3D] = []
+
+
+func _set_ignored_by_body(body: PhysicsBody3D, ignored: bool) -> void:
+	if not body or not player_body or body == player_body:
+		return
+	if ignored:
+		player_body.add_collision_exception_with(body)
+		body.add_collision_exception_with(player_body)
+		if body is XRToolsPickable and not _held_exceptions.has(body):
+			_held_exceptions.append(body)
+	else:
+		player_body.remove_collision_exception_with(body)
+		body.remove_collision_exception_with(player_body)
+
+
+## Something was let go: stop ignoring held objects that neither hand holds any more.
+func _release_held_exceptions() -> void:
+	var still_held: Array = []
+	for hand_name in ["LeftHand", "RightHand"]:
+		var pickup := get_node_or_null(hand_name + "/FunctionPickup") as XRToolsFunctionPickup
+		if pickup and is_instance_valid(pickup.picked_up_object):
+			still_held.append(pickup.picked_up_object)
+	for body in _held_exceptions.duplicate():
+		if not is_instance_valid(body):
+			_held_exceptions.erase(body)
+		elif not still_held.has(body):
+			_set_ignored_by_body(body, false)
+			_held_exceptions.erase(body)
+
+
 func _process(_delta: float) -> void:
 	# Sprint while airborne can feel like floating; force-stop sprint until grounded again.
 	if movement_sprint and player_body and not player_body.on_ground and movement_sprint.is_active:
 		movement_sprint.set_sprinting(false)
 
-	# Grip move / turn / pinch-scale of the model lives in ToyModelManipulator (scripts/plant).
+	# Grip turning and stick slide / turn / scale of the model live in ToyModelManipulator (scripts/plant).
 	# World-grab stays off in toy mode, so world_scale must stay at 1.0 to keep the player human-sized.
 	if toy_model_active and XRServer.world_scale != 1.0:
 		XRServer.world_scale = 1.0
@@ -154,15 +204,13 @@ func _on_ar_mode_changed(ar_enabled: bool) -> void:
 	_ar_mode_active = ar_enabled
 	print("[XRPlayerPointer] AR mode changed: ", ar_enabled)
 	
-	# Lock left stick (direct movement) in AR mode
-	if ar_enabled:
-		if movement_direct:
-			movement_direct.enabled = false
-			print("[XRPlayerPointer] Direct movement DISABLED for AR mode")
-	else:
-		if movement_direct:
-			movement_direct.enabled = true
-			print("[XRPlayerPointer] Direct movement ENABLED for VR mode")
+	# Lock left stick (direct movement) and right stick (turning) in AR mode: the virtual world must stay
+	# lined up with the real room, so the player only moves and turns by physically walking and turning.
+	if movement_direct:
+		movement_direct.enabled = not ar_enabled
+	if movement_turn:
+		movement_turn.enabled = not ar_enabled
+	print("[XRPlayerPointer] Stick movement and turning ", "DISABLED for AR mode" if ar_enabled else "ENABLED for VR mode")
 
 
 func _on_player_movement_locked(toggled_on: bool) -> void:
@@ -189,12 +237,13 @@ func _on_player_movement_locked(toggled_on: bool) -> void:
 		if movement_world_grab:
 			movement_world_grab.enabled = false
 			print("[XRPlayerPointer] World Grab disabled")
+		# AR mode keeps stick movement and turning off (see _on_ar_mode_changed).
 		if movement_direct:
-			movement_direct.enabled = true
-			print("[XRPlayerPointer] Direct movement enabled")
+			movement_direct.enabled = not _ar_mode_active
+			print("[XRPlayerPointer] Direct movement enabled: ", movement_direct.enabled)
 		if movement_turn:
-			movement_turn.enabled = true
-			print("[XRPlayerPointer] Turn movement enabled")
+			movement_turn.enabled = not _ar_mode_active
+			print("[XRPlayerPointer] Turn movement enabled: ", movement_turn.enabled)
 		if movement_sprint:
 			movement_sprint.enabled = true
 			print("[XRPlayerPointer] Sprint enabled")
@@ -234,7 +283,7 @@ func _on_toy_model_mode_activated(toggled_on: bool) -> void:
 		_last_world_scale = 1.0
 		XRServer.world_scale = 1.0
 		
-		# Grip now grabs the model itself (ToyModelManipulator), not the world.
+		# Grips now turn the model in place (ToyModelManipulator), not grab the world.
 		if movement_world_grab:
 			movement_world_grab.enabled = false
 		if world_scale_node:
